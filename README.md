@@ -1,6 +1,8 @@
 # bulldozer
 
-아프지마~
+필요 설정
+ 자바 17
+ gadle 7.4
 
 ## Getting Started
 
