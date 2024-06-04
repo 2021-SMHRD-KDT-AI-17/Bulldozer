@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "528580094410",
+    "firebase_url": "https://b-flutterproject-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "b-flutterproject",
+    "storage_bucket": "b-flutterproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:528580094410:android:2716fb4f5dc7fdb25e8733",
+        "android_client_info": {
+          "package_name": "com.bulldozer.stop"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYTb8NMswKeIF_mRKky_2denqexTion6U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
