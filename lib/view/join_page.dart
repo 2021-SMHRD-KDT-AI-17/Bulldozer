@@ -1,28 +1,34 @@
+import 'package:bulldozer/login/firebase_service.dart';
 import 'package:bulldozer/main.dart';
+import 'package:bulldozer/controller/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:async';
 
 class JoinPage extends StatefulWidget {
   const JoinPage({super.key});
 
+
   @override
   State<JoinPage> createState() => _JoinPageState();
+
 }
 
 class _JoinPageState extends State<JoinPage> with TickerProviderStateMixin {
+  userController uc=userController();
+  static const setTimer=120; // 2:00 분을 초로 설정
   late AnimationController _formController;
   late Animation<double> _formAnimation;
   String _selectedAreaCode = '010';
   final List<String> _areaCodes = ['010', '02', '031', '062'];
+  final List<String> forbiddenEmail=['INSERT','SELECT','UPDATE','DELETE','DROP','TRUNCATE'];
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-
+  firebaseService fireSer=firebaseService();
   bool _validateEmail = false;
   bool _validatePassword = false;
   bool _validatePhone = false;
@@ -30,13 +36,12 @@ class _JoinPageState extends State<JoinPage> with TickerProviderStateMixin {
 
   bool _isButtonDisabled = false;
   String _buttonText = "이메일 인증";
-  int _countdownTime = 180; // 3:00 분을 초로 설정
+  int _countdownTime = setTimer;
   Timer? _timer;
 
   @override
   void initState() {
     super.initState();
-
     _formController = AnimationController(
       duration: const Duration(milliseconds: 500),
       vsync: this,
@@ -63,7 +68,7 @@ class _JoinPageState extends State<JoinPage> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  void _validateForm() {
+  void _validateForm() async{ // 백 - 회원가입
     setState(() {
       _validateEmail = _emailController.text.isEmpty;
       _validatePassword = _passwordController.text.isEmpty;
@@ -71,36 +76,68 @@ class _JoinPageState extends State<JoinPage> with TickerProviderStateMixin {
     });
 
     if (!_validateEmail && !_validatePassword && !_validatePhone) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (_) => const MyHomePage()),
-      );
+      bool isExist = await uc.selectM(_emailController.text);
+      bool isForbidden=false;
+      String dbtest=_emailController.text.toUpperCase();
+      for (String forbiddenword in forbiddenEmail){
+        if(dbtest.contains(forbiddenword))isForbidden=true;
+      }
+      if(isForbidden==true){
+        Fluttertoast.showToast(msg: "사용 불가능한 이메일 입니다.");
+      }else if(isExist==false){
+        try {
+          if (_emailController.text != "") {
+            fireSer.getinfo(_emailController.text, _passwordController.text);
+            bool res=await fireSer.checkAndJoin(context);
+            if(res==true){
+              uc.insertM(_emailController.text, _passwordController.text,_phoneController.text);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const MyHomePage()),
+              );
+            }
+          }
+        } catch (e) {
+          Fluttertoast.showToast(msg: "이메일 인증 중 오류가 발생했습니다.");
+          print(e);
+        }
+      }else{
+        Fluttertoast.showToast(msg: "이미 가입된 이메일 입니다.");
+      }
+
     }
   }
 
-  Future<void> _sendVerificationEmail() async {
-    try {
-      FirebaseAuth auth = FirebaseAuth.instance;
-      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
-        email: _emailController.text,
-        password: _passwordController.text,
-      );
-
-      User? user = userCredential.user;
-      if (user != null && !user.emailVerified) {
-        await user.sendEmailVerification();
-        Fluttertoast.showToast(msg: "인증 이메일이 전송되었습니다. 이메일을 확인하세요.");
-        _startCountdown();
-      }
-    } catch (e) {
-      Fluttertoast.showToast(msg: "이메일 인증 중 오류가 발생했습니다.");
+  Future<void> _sendVerificationEmail() async { // 백 - 이메일 검증 --완료
+    bool isExist = await uc.selectM(_emailController.text);
+    bool isForbidden=false;
+    String dbtest=_emailController.text.toUpperCase();
+    for (String forbiddenword in forbiddenEmail){
+      if(dbtest.contains(forbiddenword))isForbidden=true;
     }
+    if(isForbidden==true){
+      Fluttertoast.showToast(msg: "사용 불가능한 이메일 입니다.");
+    }else if(isExist==false){
+      try {
+        if (_emailController.text != "") {
+          fireSer.getinfo(_emailController.text,_passwordController.text);
+          fireSer.createTempAccountAndVerifyEmail(context);
+          Fluttertoast.showToast(msg: "인증 이메일이 전송되었습니다. 이메일을 확인하세요.");
+          _startCountdown();
+        }
+      } catch (e) {
+        Fluttertoast.showToast(msg: "이메일 인증 중 오류가 발생했습니다.");
+      }
+    }else{
+      Fluttertoast.showToast(msg: "이미 가입된 이메일 입니다.");
+    }
+
   }
 
   void _startCountdown() {
     setState(() {
       _isButtonDisabled = true;
-      _buttonText = "인증 확인";
+      _buttonText = "인증 남은시간";
     });
 
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -110,6 +147,7 @@ class _JoinPageState extends State<JoinPage> with TickerProviderStateMixin {
         } else {
           timer.cancel();
           _isButtonDisabled = false;
+          _countdownTime=setTimer;
           _buttonText = "이메일 인증";
         }
       });

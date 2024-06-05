@@ -41,9 +41,22 @@ class userController extends ControllerMVC {
     }
   }
 
-  // 임시코드-추가
-  Future<void> insertM() async{
-    await DBConn("INSERT INTO tb_user (u_email, u_pw, u_at, u_tel) VALUES ('u_email 011', 'u_pw 011', NOW(), 'u_tel 011');");
+  // 추가
+  Future<void> insertM(uemail,upw,utel) async{
+    await DBConn("INSERT INTO tb_user (u_email, u_pw, u_tel) VALUES ('${uemail}', '${upw}', '${utel}');");
+  }
+  // 조회
+  Future<bool> selectM(String email) async{
+    await DBConn("SELECT u_email FROM tb_user where u_email='${email}'");
+    users.clear();
+    for (int i = 0; i < res.length; i++) {
+      if (res[i].isNotEmpty) {
+        tb_user user = tb_user();
+        user.setEmail = res[i][0] as String?;
+        users.add(user);
+      }
+    }
+    return users.length!=0? true : false;
   }
 
   // 임시코드-삭제

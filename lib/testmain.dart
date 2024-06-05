@@ -1,6 +1,6 @@
-import 'package:bulldozer/user_controller.dart';
+import 'package:bulldozer/controller/user_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:bulldozer/firebase_service.dart';
+import 'package:bulldozer/login/firebase_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async{
@@ -36,6 +36,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final firebaseService fs=firebaseService();
+
   int _counter = 0;
 
   void _incrementCounter() {
@@ -46,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
+    fs.getinfo("ahtm8210@naver.com","");
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -66,16 +67,24 @@ class _MyHomePageState extends State<MyHomePage> {
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             ElevatedButton(onPressed: (){
-              fs.createEmailAndPassword(context);
+              fs.createTempAccountAndVerifyEmail(context);
             }, child: Text('가입실험')),
             ElevatedButton(onPressed: (){
-              fs.isEmailChecked();
+              // fs.isEmailChecked();
             }, child: Text('가입확인실험')),
             ElevatedButton(onPressed: (){
               userController uc=userController();
               uc.loadData();
               print(uc.users);
-            }, child: Text('DBtest'))
+            }, child: Text('DBtest')),
+            ElevatedButton(onPressed: (){
+              userController uc=userController();
+              uc.insertM("test01234","test234","01033334444");
+            }, child: Text('DBinsertTest')),
+            ElevatedButton(onPressed: (){
+              userController uc=userController();
+              uc.selectM("asdasd");
+            }, child: Text('DBselectTest'))
           ],
         ),
       ),

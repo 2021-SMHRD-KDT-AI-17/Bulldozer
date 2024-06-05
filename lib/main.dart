@@ -1,13 +1,28 @@
 import 'package:bulldozer/view/join_page.dart';
-// import 'package:project_bulldozer/report_check_page.dart';
+import 'package:bulldozer/view/user_main.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:mysql_client/mysql_client.dart';
+import 'package:bulldozer/controller/user_controller.dart';
+import 'package:bulldozer/model/user_Model.dart';
+// import 'package:bulldozer/view/AdminView.dart';
+// import 'package:bulldozer/view/DictView.dart';
+// import 'package:bulldozer/view/JoinView.dart';
+// import 'package:bulldozer/view/UrlListView.dart';
+// import 'package:bulldozer/view/UserMainView.dart';
+// import 'package:bulldozer/view/test.dart';
+// import 'package:bulldozer/view/testview.dart';
+// import 'package:bulldozer/view/UserListView.dart';
 // import 'package:url_launcher/url_launcher.dart';
+import 'package:bulldozer/db_main.dart';
+import 'package:mvc_pattern/mvc_pattern.dart';
 
+final Uri _url = Uri.parse('https://naver.com');
 
-// final Uri _url = Uri.parse('https://naver.com');
-
-
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -17,19 +32,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
       theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
         useMaterial3: true,
       ),
-      home: const MyHomePage(),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
-
-
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -44,9 +57,16 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   late Animation<double> _rotationAnimation;
   late Animation<double> _formAnimation;
 
+  late userController UserController;
+
+  TextEditingController _idCon = TextEditingController();
+  TextEditingController _pwCon = TextEditingController();
+
   @override
   void initState() {
     super.initState();
+
+    UserController = userController();
 
     _fadeController = AnimationController(
       duration: const Duration(seconds: 2),
@@ -133,9 +153,10 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     _fadeController.dispose();
     _moveController.dispose();
     _formController.dispose();
+    _idCon.dispose();
+    _pwCon.dispose();
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -223,10 +244,11 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 ),
               ],
             ),
-            child: const TextField(
-              decoration: InputDecoration(
+            child: TextField(
+              controller: _idCon,
+              decoration: const InputDecoration(
                 icon: Icon(Icons.person),
-                hintText: 'Username',
+                hintText: 'Email',
                 border: InputBorder.none,
               ),
             ),
@@ -245,9 +267,10 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 ),
               ],
             ),
-            child: const TextField(
+            child: TextField(
+              controller: _pwCon,
               obscureText: true,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 icon: Icon(Icons.lock),
                 hintText: 'Password',
                 border: InputBorder.none,
@@ -256,7 +279,13 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           ),
           const SizedBox(height: 16),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              // 로그인 메서드 자리
+              _login(_idCon.text, _pwCon.text);
+
+              print('Username: ${_idCon.text}');
+              print('Password: ${_pwCon.text}');
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blueAccent, // primary 대신 backgroundColor 사용
               foregroundColor: Colors.white, // onPrimary 대신 foregroundColor 사용
@@ -271,16 +300,40 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           const SizedBox(height: 16),
           TextButton(
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (_)=> const JoinPage()));
-
+              Navigator.push(context, MaterialPageRoute(builder: (_) => const JoinPage()));
             },
             child: const Text('아직 회원이 아니신가요? 회원가입', style: TextStyle(color: Colors.white)),
           ),
-          ElevatedButton(onPressed: //_launchUrl
-              (){}
-            , child: Text('Show Flutter homepage'), )
+          // ElevatedButton(
+          //   onPressed: _launchUrl,
+          //   child: const Text('Show Flutter homepage'),
+          // ),
         ],
       ),
     );
   }
+
+  // 로그인
+  Future<void> _login(String email, String pw) async{
+    final storage = FlutterSecureStorage();
+    await UserController.login(email, pw);
+    print(res);
+
+    if(res[0][0] == pw && email != 'admin'){
+      // 로그인 성공
+      print('로그인 성공');
+      await storage.write(key: 'loginM', value: '${email}');
+      String? value = await storage.read(key: 'loginM');
+      print('${value}');
+
+      Navigator.push(context, MaterialPageRoute(builder: (context) => UserMain(),));
+    } else if (res[0][0] == 'admin' && email == 'admin') {
+      print('관리자');
+      // Navigator.push(context, MaterialPageRoute(builder: (context) => AdminPage(),));
+    } else {
+      // 로그인 실패
+      print('로그인 실패');
+    }
+  }
+
 }
