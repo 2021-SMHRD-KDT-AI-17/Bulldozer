@@ -1,11 +1,11 @@
-import 'package:bulldozer/view/join_page.dart';
-import 'package:bulldozer/view/user_main.dart';
+import 'package:bulldozer/view/JoinView.dart';
+import 'package:bulldozer/view/UserMain.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mysql_client/mysql_client.dart';
-import 'package:bulldozer/controller/user_controller.dart';
-import 'package:bulldozer/model/user_Model.dart';
+import 'package:bulldozer/controller/UserController.dart';
+import 'package:bulldozer/model/UserModel.dart';
 // import 'package:bulldozer/view/AdminView.dart';
 // import 'package:bulldozer/view/DictView.dart';
 // import 'package:bulldozer/view/JoinView.dart';
@@ -52,10 +52,13 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   late AnimationController _fadeController;
   late AnimationController _moveController;
   late AnimationController _formController;
+  late AnimationController _initialMoveController;
+
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _imagePositionAnimation;
   late Animation<double> _rotationAnimation;
   late Animation<double> _formAnimation;
+  late Animation<Offset> _initialMoveAnimation;
 
   late userController UserController;
 
@@ -65,28 +68,30 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-
     UserController = userController();
 
     _fadeController = AnimationController(
       duration: const Duration(seconds: 2),
       vsync: this,
     );
-
     _moveController = AnimationController(
       duration: const Duration(seconds: 1),
       vsync: this,
     );
-
     _formController = AnimationController(
       duration: const Duration(seconds: 1),
       vsync: this,
     );
-
-    _fadeAnimation = Tween<double>(begin: 1.0, end: 0.0).animate(
+    _initialMoveController = AnimationController(
+      duration: const Duration(seconds: 1),
+      vsync: this,
+    );
+    _fadeAnimation = Tween<double>(begin: 2.0, end: 0.0).animate(
       CurvedAnimation(parent: _fadeController, curve: Curves.easeInOut),
     );
-
+    _initialMoveAnimation = Tween<Offset>(begin: const Offset(-2.0, 0), end: const Offset(0, 0)).animate(
+      CurvedAnimation(parent: _initialMoveController, curve: Curves.easeInOut),
+    );
     _imagePositionAnimation = TweenSequence<Offset>([
       TweenSequenceItem(
         tween: Tween<Offset>(begin: const Offset(0, 0), end: const Offset(-0.1, 0)).chain(CurveTween(curve: Curves.easeInOut)),
@@ -107,7 +112,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     ]).animate(
       CurvedAnimation(parent: _moveController, curve: Curves.easeInOut),
     );
-
     _rotationAnimation = TweenSequence<double>([
       TweenSequenceItem(
         tween: Tween<double>(begin: 0.0, end: -0.1).chain(CurveTween(curve: Curves.easeInOut)),
@@ -128,25 +132,18 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     ]).animate(
       CurvedAnimation(parent: _moveController, curve: Curves.easeInOut),
     );
-
     _formAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _formController, curve: Curves.easeInOut),
     );
-
     _startAnimationSequence();
   }
 
   Future<void> _startAnimationSequence() async {
     await _fadeController.forward();
+    await _initialMoveController.forward();
     await _moveController.forward();
     await _formController.forward();
   }
-
-  // Future<void> _launchUrl() async {
-  //   if (!await launchUrl(_url)) {
-  //     throw Exception('Could not launch $_url');
-  //   }
-  // }
 
   @override
   void dispose() {
@@ -155,6 +152,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     _formController.dispose();
     _idCon.dispose();
     _pwCon.dispose();
+    _initialMoveController.dispose();
     super.dispose();
   }
 
@@ -192,14 +190,17 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 ),
                 const SizedBox(height: 5),
                 SlideTransition(
-                  position: _imagePositionAnimation,
-                  child: RotationTransition(
-                    turns: _rotationAnimation,
-                    child: const Padding(
-                      padding: EdgeInsets.only(top: 20),
-                      child: Image(
-                        image: AssetImage('images/sadcat.png'),
-                        height: 200,
+                  position: _initialMoveAnimation,
+                  child: SlideTransition(
+                    position: _imagePositionAnimation,
+                    child: RotationTransition(
+                      turns: _rotationAnimation,
+                      child: const Padding(
+                        padding: EdgeInsets.only(top: 20),
+                        child: Image(
+                          image: AssetImage('images/bulldozer_icon.png'),
+                          height: 170,
+                        ),
                       ),
                     ),
                   ),
@@ -228,7 +229,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   Widget _buildLoginForm() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 32.0),
+      padding: const EdgeInsets.symmetric(horizontal: 45.0),
       child: Column(
         children: [
           Container(
@@ -248,12 +249,12 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               controller: _idCon,
               decoration: const InputDecoration(
                 icon: Icon(Icons.person),
-                hintText: 'Email',
+                hintText: 'YourEmail',
                 border: InputBorder.none,
               ),
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 20),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             decoration: BoxDecoration(
@@ -291,7 +292,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               foregroundColor: Colors.white, // onPrimary 대신 foregroundColor 사용
               padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: BorderRadius.circular(25),
               ),
               elevation: 5,
             ),

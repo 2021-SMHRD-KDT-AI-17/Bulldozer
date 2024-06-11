@@ -1,6 +1,6 @@
 import 'package:bulldozer/login/firebase_service.dart';
 import 'package:bulldozer/main.dart';
-import 'package:bulldozer/controller/user_controller.dart';
+import 'package:bulldozer/controller/UserController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:bulldozer/model/user_model.dart';
+import 'package:bulldozer/model/UserModel.dart';
 import 'package:bulldozer/db_main.dart';
 
 class userController extends ControllerMVC {

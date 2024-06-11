@@ -1,4 +1,4 @@
-import 'package:bulldozer/controller/user_controller.dart';
+import 'package:bulldozer/controller/UserController.dart';
 import 'package:flutter/material.dart';
 import 'package:bulldozer/login/firebase_service.dart';
 import 'package:firebase_core/firebase_core.dart';
