@@ -1,4 +1,5 @@
 package com.example.bulldozer
+
 import android.accessibilityservice.AccessibilityService
 import android.accessibilityservice.AccessibilityServiceInfo
 import android.content.Intent
@@ -6,39 +7,43 @@ import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 
-class BrowserAccessibilityService : AccessibilityService()   {
-    override fun onServiceConnected() {
-        val info = AccessibilityServiceInfo()
-        info.eventTypes = AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED or AccessibilityEvent.TYPE_VIEW_CLICKED or AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
-        info.feedbackType = AccessibilityServiceInfo.FEEDBACK_SPOKEN
-        info.flags = AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS
-        info.packageNames = arrayOf("com.android.chrome", "org.mozilla.firefox", "com.microsoft.emmx")
-        serviceInfo = info
-        Log.d("BrowserAccessibilityService", "Service connected")
+class BrowserAccessibilityService : AccessibilityService() {
+
+    companion object{
+        var isServiceActive: Boolean = false
     }
 
+    override fun onServiceConnected() {
+        super.onServiceConnected() // 부모 클래스의 메서드 호출
+        val info = AccessibilityServiceInfo().apply {
+            eventTypes = AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED or
+                    AccessibilityEvent.TYPE_VIEW_CLICKED or
+                    AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
+            feedbackType = AccessibilityServiceInfo.FEEDBACK_GENERIC
+            flags = AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS
+            packageNames = arrayOf("com.android.chrome", "org.mozilla.firefox", "com.microsoft.emmx")
+        }
+        serviceInfo = info
+    }
+
+
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
+        if (!isServiceActive) return
+
         if (event != null) {
             val source = event.source ?: return
-            Log.d("BrowserAccessibilityService", "Event source class: ${source.className}")
-            Log.d("BrowserAccessibilityService", "Event type: ${AccessibilityEvent.eventTypeToString(event.eventType)}")
-            Log.d("BrowserAccessibilityService", "Package name: ${event.packageName}")
 
             if (event.packageName == "com.android.chrome") {
                 val urlNode = findUrlBarNode(source)
                 if (urlNode != null) {
                     val url = urlNode.text?.toString() ?: "Unknown"
-                    Log.d("BrowserAccessibilityService", "URL: $url")
                     sendUrlToApp(url)
-                } else {
-                    Log.d("BrowserAccessibilityService", "URL bar not found")
                 }
             }
         }
     }
 
     private fun findUrlBarNode(node: AccessibilityNodeInfo): AccessibilityNodeInfo? {
-        Log.d("BrowserAccessibilityService", "Checking node: ${node.className}, ${node.viewIdResourceName}")
         if (node.className == "android.widget.EditText" && node.viewIdResourceName == "com.android.chrome:id/url_bar") {
             return node
         }
@@ -54,7 +59,6 @@ class BrowserAccessibilityService : AccessibilityService()   {
     }
 
     override fun onInterrupt() {
-        Log.d("BrowserAccessibilityService", "Service interrupted")
     }
 
     private fun sendUrlToApp(url: String) {

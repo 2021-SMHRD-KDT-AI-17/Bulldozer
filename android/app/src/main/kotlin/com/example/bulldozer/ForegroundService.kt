@@ -12,15 +12,10 @@ import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
 
-class ForegroundService : Service() {
+class KotlinForegroundService : Service() {
     private val CHANNEL_ID = "ForegroundServiceChannel"
+    private val TAG = "KotlinForegroundService"
     private val handler = Handler()
-
-    companion object {
-        private const val TAG = "ForegroundService"
-    }
-
-    // 앱 활동 알람
     private val runnableCode: Runnable = object : Runnable {
         override fun run() {
             Log.d(TAG, "Service is still running")
@@ -32,13 +27,10 @@ class ForegroundService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        Log.d(TAG, "Service onCreate called")
         createNotificationChannel()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Log.d(TAG, "onStartCommand called")
-        // 알림을 바로 생성하여 표시
         if (intent != null && intent.action == "START_FOREGROUND_SERVICE") {
             startForegroundServiceNotification()
         }
@@ -54,9 +46,8 @@ class ForegroundService : Service() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         handler.removeCallbacks(runnableCode)
-        Log.d(TAG, "Service onDestroy called")
+        super.onDestroy()
     }
 
     private fun createNotificationChannel() {
@@ -68,7 +59,6 @@ class ForegroundService : Service() {
             )
             val manager = getSystemService(NotificationManager::class.java)
             manager.createNotificationChannel(serviceChannel)
-            Log.d(TAG, "Notification channel created")
         }
     }
 
@@ -78,7 +68,7 @@ class ForegroundService : Service() {
         val notification: Notification = NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("My App Service 문구 테스트")
                 .setContentText("Running in the background 감시중")
-                .setSmallIcon(R.drawable.ic_notification)  // 리소스 추가 필요
+//                .setSmallIcon(R.drawable.ic_notification)  // 리소스 추가 필요
                 .setContentIntent(pendingIntent)
                 .build()
 
@@ -92,13 +82,12 @@ class ForegroundService : Service() {
         val notification: Notification = NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("My App Service")
                 .setContentText(contentText)
-                .setSmallIcon(R.drawable.ic_notification)  // 리소스 추가 필요
+//                .setSmallIcon(R.drawable.ic_notification)  // 리소스 추가 필요
                 .setContentIntent(pendingIntent)
                 .build()
 
         val notificationManager = getSystemService(NotificationManager::class.java)
         notificationManager.notify(1, notification)
-        Log.d(TAG, "Notification updated")
     }
 
     private fun stopForegroundService() {

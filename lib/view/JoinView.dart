@@ -1,6 +1,7 @@
 import 'package:bulldozer/login/firebase_service.dart';
 import 'package:bulldozer/main.dart';
 import 'package:bulldozer/controller/UserController.dart';
+import 'package:bulldozer/view/JoinComPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -91,10 +92,7 @@ class _JoinPageState extends State<JoinPage> with TickerProviderStateMixin {
             bool res=await fireSer.checkAndJoin(context);
             if(res==true){
               uc.insertM(_emailController.text, _passwordController.text,_phoneController.text);
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const MyHomePage()),
-              );
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => JoinComPage(userEmail:_emailController.text),),(Route<dynamic>route)=>false);
             }
           }
         } catch (e) {
@@ -147,6 +145,7 @@ class _JoinPageState extends State<JoinPage> with TickerProviderStateMixin {
         } else {
           timer.cancel();
           _isButtonDisabled = false;
+          fireSer.deleteUser();
           _countdownTime=setTimer;
           _buttonText = "이메일 인증";
         }

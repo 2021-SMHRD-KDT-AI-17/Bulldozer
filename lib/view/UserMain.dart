@@ -11,6 +11,7 @@ import '../../painter/liquid_painter.dart';
 import '../../painter/radial_painter.dart';
 // import 'package:bulldozer/view/ReportView.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import '../../flaskVerifi.dart';
 
 class UserMain extends StatefulWidget {
   const UserMain({super.key});
@@ -19,8 +20,7 @@ class UserMain extends StatefulWidget {
   State<UserMain> createState() => _UserMainState();
 }
 
-class _UserMainState extends State<UserMain> with TickerProviderStateMixin {
-  // 애니메이션 컨트롤러 정의
+class _UserMainState extends State<UserMain> with TickerProviderStateMixin {  // 애니메이션 컨트롤러 정의
   late AnimationController _animationController;
   bool _isSwitchOn = false; // 토글 버튼 상태 저장
 
@@ -95,7 +95,7 @@ class _UserMainState extends State<UserMain> with TickerProviderStateMixin {
   }
 
   // 토글 버튼 상태 변경 함수
-  void _toggleAnimation(int index) {
+  void _toggleAnimation(int index) async{
     setState(() {
       _isSwitchOn = index == 1;
       if (_isSwitchOn) {
@@ -109,6 +109,11 @@ class _UserMainState extends State<UserMain> with TickerProviderStateMixin {
         });
       }
     });
+    // DB 업데이트
+    String? value = await loginCheck();
+    if (value != null) {
+      await UserconHisController.runTimeget(value, _isSwitchOn);
+    }
   }
 
   // 로그인 상태 확인
@@ -153,6 +158,9 @@ class _UserMainState extends State<UserMain> with TickerProviderStateMixin {
                 Spacer(), // 남은 공간 채우기
                 ElevatedButton(
                   onPressed: () { //리포트 페이지 미완
+                    verifi fv=verifi();
+                    fv.test2();
+
                     // Navigator.push(
                     //   context,
                     //   MaterialPageRoute(
