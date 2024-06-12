@@ -60,6 +60,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   late Animation<double> _formAnimation;
   late Animation<Offset> _initialMoveAnimation;
 
+  final storage = FlutterSecureStorage();
   late userController UserController;
 
   TextEditingController _idCon = TextEditingController();
@@ -136,9 +137,11 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       CurvedAnimation(parent: _formController, curve: Curves.easeInOut),
     );
     _startAnimationSequence();
+    _isLogin();
   }
 
   Future<void> _startAnimationSequence() async {
+
     await _fadeController.forward();
     await _initialMoveController.forward();
     await _moveController.forward();
@@ -314,9 +317,19 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     );
   }
 
+  // 로그인 정보 있는지 확인
+  Future<void> _isLogin() async {
+    String? value = await storage.read(key: 'loginM');
+    if(value!=null){
+      print('${value}');
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => UserMain(),),(Route<dynamic>route)=>false);
+    }
+  }
+
+
   // 로그인
   Future<void> _login(String email, String pw) async{
-    final storage = FlutterSecureStorage();
+
     await UserController.login(email, pw);
     print(res);
 
@@ -324,10 +337,10 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       // 로그인 성공
       print('로그인 성공');
       await storage.write(key: 'loginM', value: '${email}');
-      String? value = await storage.read(key: 'loginM');
-      print('${value}');
+      // String? value = await storage.read(key: 'loginM');
+      // print('${value}');
 
-      Navigator.push(context, MaterialPageRoute(builder: (context) => UserMain(),));
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => UserMain(),),(Route<dynamic>route)=>false);
     } else if (res[0][0] == 'admin' && email == 'admin') {
       print('관리자');
       // Navigator.push(context, MaterialPageRoute(builder: (context) => AdminPage(),));

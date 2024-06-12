@@ -1,4 +1,5 @@
 import 'package:bulldozer/controller/UserController.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:bulldozer/login/firebase_service.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -36,7 +37,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final firebaseService fs=firebaseService();
-
+  dynamic dioResultJson = '';
+  String dioResultValue = '';
   int _counter = 0;
 
   void _incrementCounter() {
@@ -47,7 +49,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    fs.getinfo("ahtm8210@naver.com","");
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -67,24 +68,11 @@ class _MyHomePageState extends State<MyHomePage> {
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             ElevatedButton(onPressed: (){
-              fs.createTempAccountAndVerifyEmail(context);
-            }, child: Text('가입실험')),
+              test();
+            }, child: Text('flask테스트')),
             ElevatedButton(onPressed: (){
-              // fs.isEmailChecked();
-            }, child: Text('가입확인실험')),
-            ElevatedButton(onPressed: (){
-              userController uc=userController();
-              uc.loadData();
-              print(uc.users);
-            }, child: Text('DBtest')),
-            ElevatedButton(onPressed: (){
-              userController uc=userController();
-              uc.insertM("test01234","test234","01033334444");
-            }, child: Text('DBinsertTest')),
-            ElevatedButton(onPressed: (){
-              userController uc=userController();
-              uc.selectM("asdasd");
-            }, child: Text('DBselectTest'))
+
+            }, child: Text(''))
           ],
         ),
       ),
@@ -94,5 +82,33 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  void test() async{
+    {
+      print("Click");
+      final dio= Dio();
+      // API 요청
+      final response;
+      try {
+        response = await dio.post(
+          'http://192.168.219.66:5000/service/',
+          data: {"url":"totogun.com/bbs/board.php?bo_table=gnb_74","id":"ahtm8210@daum.net"},
+        );
+        print("!");
+        print(response.data);
+      } catch (e) {
+        print("Error: $e");
+      }
+      print("!");
+      // // API 응답 결과 반영을 위한 상태 변경
+      // setState(() {
+      //   // 전체 값 호출
+      //   dioResultJson = response.data;
+      //
+      //   // 특정 키 값 호출 : 'result' 키의 값 호출
+      //   dioResultValue = response.data['result'];
+      // });
+    }
   }
 }
