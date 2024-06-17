@@ -1,6 +1,6 @@
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:bulldozer/model/UserconHisModel.dart';
-import 'package:bulldozer/db_main.dart';
+import 'package:bulldozer/db.dart';
 
 class userconHisController extends ControllerMVC {
 
@@ -40,16 +40,21 @@ class userconHisController extends ControllerMVC {
 
   }
 
-  // 실행 시간 가져오기
-  Future<void> runTimeget(String email, bool state) async{
-    if(state = true){
-      await DBConn('update tb_usercon_his set uc_con = now(), uc_recent = 1 where u_email="${email}";');
-      await DBConn('select * from tb_usercon_his where u_email="${email}";');
-    } else if(state = false){
-      await DBConn('update tb_usercon_his set uc_discon = now(), uc_recent = 0 where u_email="${email}";');
-      await DBConn('select * from tb_usercon_his where u_email="${email}";');
-    }
+  Future<void> addUserCon(String email)async{
+    await DBConn('select * from tb_usercon_his where u_email="${email}";');
+    if(res.length==0)
+      await DBConn('insert into tb_usercon_his(u_email) values("${email}");');
   }
+  // 실행 시간 가져오기
+  Future<void> runTimeget(String email, bool state) async {
+    if (state) {
+      await DBConn('update tb_usercon_his set uc_con = now(), uc_recent = 1 where u_email="$email";');
+    } else {
+      await DBConn('update tb_usercon_his set uc_discon = now(), uc_recent = 0 where u_email="$email";');
+    }
+    await DBConn('select * from tb_usercon_his where u_email="$email";');
+  }
+
 
   // tb_usercon_his 객체를 가져오는 getter
   tb_usercon_his? getUsercon(int index) {

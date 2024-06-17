@@ -1,5 +1,8 @@
 import 'dart:async';
 
+import 'package:bulldozer/view/ReportView.dart';
+import 'package:flutter/services.dart';
+
 import '../../constants/animated_toggle_button.dart';
 // import 'package:bulldozer/view/ReportCheckView.dart';
 import '../../constants/theme_color.dart';
@@ -14,13 +17,21 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../flaskVerifi.dart';
 
 class UserMain extends StatefulWidget {
+  static const backService = MethodChannel('ForegroundServiceChannel'); // 코틀린
+  static const browserChannel = MethodChannel('com.example.bulldozer/browser'); //코틀린
   const UserMain({super.key});
 
   @override
   State<UserMain> createState() => _UserMainState();
 }
 
-class _UserMainState extends State<UserMain> with TickerProviderStateMixin {  // 애니메이션 컨트롤러 정의
+class _UserMainState extends State<UserMain> with TickerProviderStateMixin {
+  String _url = ""; // URL 정보를 저장할 변수
+  String _recentUrl="test1234";
+  String _backUrl="test5678";
+  String? _userE; //사용자 이름 저장할 변수
+  // 애니메이션 컨트롤러 정의
+  verifi? urlVerifi=null;
   late AnimationController _animationController;
   bool _isSwitchOn = false; // 토글 버튼 상태 저장
 
@@ -78,6 +89,10 @@ class _UserMainState extends State<UserMain> with TickerProviderStateMixin {  //
   @override
   void initState() {
     super.initState();
+    //url 가져오기
+    _setupMethodChannel();
+    // Foreground 서비스 중지
+    stopForegroundService();
     // 애니메이션 컨트롤러 초기화
     _animationController = AnimationController(
       duration: const Duration(milliseconds: _setDuration),
@@ -89,47 +104,90 @@ class _UserMainState extends State<UserMain> with TickerProviderStateMixin {  //
 
   @override
   void dispose() {
+    // Foreground 서비스 중지
+    stopForegroundService();
     // 애니메이션 컨트롤러 해제
     _animationController.dispose();
     super.dispose();
   }
 
   // 토글 버튼 상태 변경 함수
-  void _toggleAnimation(int index) async{
+  void _toggleAnimation(int index) async {
+    if(urlVerifi==null)urlVerifi=await verifi.getInstance();
     setState(() {
       _isSwitchOn = index == 1;
       if (_isSwitchOn) {
         _animationController.forward();
+        startForegroundService();
       } else {
         _animationController.duration =
         const Duration(milliseconds: _setDuration);
+        stopForegroundService();
         _animationController.reverse().then((_) {
           _animationController.duration =
           const Duration(milliseconds: _setDuration);
         });
       }
     });
+
     // DB 업데이트
-    String? value = await loginCheck();
-    if (value != null) {
-      await UserconHisController.runTimeget(value, _isSwitchOn);
+    _userE = await loginCheck();
+    if (_userE != null) {
+      await UserconHisController.addUserCon(_userE!);
+      await UserconHisController.runTimeget(_userE!, _isSwitchOn);
+    }
+  }
+  // url 가져오기
+  void _setupMethodChannel() {
+    UserMain.browserChannel.setMethodCallHandler((call) async {
+      print("callupdateUrl");
+      if (call.method == "updateUrl") {
+        setState(() {
+          _url = call.arguments as String;
+        });
+        if(_url!="Search or type web address"){
+          print("url:"+_url);
+          print("rurl:"+_recentUrl);
+          print("burl:"+_backUrl);
+          if(_url.contains(_recentUrl)==false&&_url.contains(_backUrl)==false){
+
+            _recentUrl=_url;
+            bool isHarm= await urlVerifi!.webAnalyzeTestver(_recentUrl,_userE);
+            if(isHarm==true)_recentUrl="";
+            else _backUrl=_recentUrl;
+          }
+        }
+      }
+    });
+  }
+  Future<void> startForegroundService() async {
+    try {
+      print("Attempting to start Foreground Service");
+      await UserMain.backService.invokeMethod('startForegroundService');
+      print("Foreground Service Started");
+    } on PlatformException catch (e) {
+      print("Failed to start foreground service: ${e.message}");
     }
   }
 
+  Future<void> stopForegroundService() async {
+    try {
+      print("Attempting to stop Foreground Service");
+      await UserMain.backService.invokeMethod('stopForegroundService');
+      print("Foreground Service Stopped");
+    } on PlatformException catch (e) {
+      print("Failed to stop foreground service: ${e.message}");
+    }
+  }
   // 로그인 상태 확인
-  String? value;
+
 
   Future<String?> loginCheck() async {
     final storage = FlutterSecureStorage();
-    value = await storage.read(key: 'loginM');
-    return value;
+    _userE = await storage.read(key: 'loginM');
+    return _userE;
   }
 
-  // 앱 실행 상태 확인+업뎃
-  Future<void> checkState() async {
-    print(_isSwitchOn);
-    await UserconHisController.runTimeget(value!, false);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -157,16 +215,13 @@ class _UserMainState extends State<UserMain> with TickerProviderStateMixin {  //
                 ),
                 Spacer(), // 남은 공간 채우기
                 ElevatedButton(
-                  onPressed: () { //리포트 페이지 미완
-                    verifi fv=verifi();
-                    fv.test2();
-
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => ReportPage(userE: snapshot.data ?? 'unknown'),
-                    //   ),
-                    // );
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ReportPage(userE: snapshot.data ?? 'unknown'),
+                      ),
+                    );
                   },
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -263,6 +318,7 @@ class _UserMainState extends State<UserMain> with TickerProviderStateMixin {  //
                         ? lightMode.toggleButtonColor
                         : darkMode.toggleButtonColor,
                     shadows: _isSwitchOn ? darkMode.shadow : lightMode.shadow,
+
                   ),
                   const SizedBox(height: 30),
                   // 정보 텍스트와 이미지

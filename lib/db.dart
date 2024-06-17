@@ -3,7 +3,7 @@ import 'package:mysql_client/mysql_client.dart';
 List<List> res = [];
 
 Future<void> DBConn(String query) async {
-  print("Connecting to mysql server...");
+  // print("Connecting to mysql server...");
 
   // MySQL 접속 설정
   final conn = await MySQLConnection.createConnection(
@@ -16,7 +16,7 @@ Future<void> DBConn(String query) async {
   );
 
   await conn.connect();
-  print("Connected");
+  // print("Connected");
 
   // 쿼리 실행 결과를 저장할 변수
   IResultSet? result;
@@ -34,20 +34,16 @@ Future<void> DBConn(String query) async {
 
       // 쿼리 실행 결과의 모든 내용 출력
       //print(row.assoc());
-      // print(test);
-      // print(test[1]);
-
       res.add(row.assoc().values.toList());
     }
-    print(res);
-    print('success');
-  }
+    print("queryExcute:${res}");
+      }
   // 쿼리 실행 실패
   else {
     print('failed');
   }
 
   await conn.close();
-  print('Disconnect');
+  // print('Disconnect');
 
 }

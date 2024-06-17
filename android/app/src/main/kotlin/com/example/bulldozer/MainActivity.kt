@@ -16,7 +16,6 @@ import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 
 class MainActivity : FlutterActivity() {
-    private val CHANNEL = "com.example.flutter_kotlin_example/value"
     private val FOREGROUND_SERVICE_CHANNEL = "ForegroundServiceChannel"
     private val BROWSER_CHANNEL = "com.example.bulldozer/browser"
     private lateinit var methodChannel: MethodChannel
@@ -41,10 +40,32 @@ class MainActivity : FlutterActivity() {
             }
         }
 
+        methodChannel.setMethodCallHandler { call, result ->
+            when (call.method) {
+                "launchBulldozer" -> {
+                    launchBulldozer()
+                    result.success(null)
+                }
+                else -> result.notImplemented()
+            }
+        }
+
+
         receiver = UrlUpdateReceiver()
         val filter = IntentFilter("com.example.bulldozer.URL_UPDATE")
         registerReceiver(receiver, filter)
 
+//        // 6.13 접근성 서비스 활성화 상태 확인 후 설정 화면으로 이동
+//        if (!isAccessibilityServiceEnabled(this, BrowserAccessibilityService::class.java)) {
+//            val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
+//            startActivity(intent)
+//        }
+    }
+
+    // 6.13 추가
+    override fun onResume() {
+        super.onResume()
+        // 접근성 서비스가 활성화된 경우 설정 화면으로 이동하지 않도록 추가 확인
         if (!isAccessibilityServiceEnabled(this, BrowserAccessibilityService::class.java)) {
             val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
             startActivity(intent)
@@ -84,7 +105,8 @@ class MainActivity : FlutterActivity() {
         colonSplitter.setString(enabledServices)
         while (colonSplitter.hasNext()) {
             val componentName = colonSplitter.next()
-            if (componentName.equals(service.name, ignoreCase = true)) {
+            // 6.13 추가
+            if (componentName.equals("${context.packageName}/${service.name}", ignoreCase = true)) {
                 return true
             }
         }
@@ -95,8 +117,16 @@ class MainActivity : FlutterActivity() {
         override fun onReceive(context: Context?, intent: Intent?) {
             if (intent != null && intent.action == "com.example.bulldozer.URL_UPDATE") {
                 val url = intent.getStringExtra("url")
+                Log.d("MainActivity", "BroadcastReceiver: $url")
                 methodChannel.invokeMethod("updateUrl", url)
             }
         }
+    }
+
+    //6.15 추가
+    private fun launchBulldozer() {
+        val intent = Intent(this, BrowserAccessibilityService::class.java)
+        intent.action = "LAUNCH_BULLDOZER"
+        startService(intent)
     }
 }

@@ -15,16 +15,6 @@ class firebaseService{
     if(pw!="") mypw=pw;
   }
 
-  // Future<bool> isEmailChecked() async { //이메일 인증 확인
-  //   user = _firebaseAuth.currentUser;
-  //   print("emailchecked");
-  //   print(user!.emailVerified);
-  //   if (user != null) {
-  //     await user!.reload();
-  //     return user!.emailVerified;
-  //   }
-  //   return false;
-  // }
   Future<void> deleteUser() async { //회원 삭제
     try {
       user = FirebaseAuth.instance.currentUser;

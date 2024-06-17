@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:bulldozer/model/UserModel.dart';
-import 'package:bulldozer/db_main.dart';
+import 'package:bulldozer/db.dart';
 
 class userController extends ControllerMVC {
 
@@ -22,6 +22,8 @@ class userController extends ControllerMVC {
   String? get getTel => _tb_user.u_tel;
 
   final List<tb_user> users = [];
+
+  List<List<dynamic>> userList = [];
 
   // tb_user 객체에 결과를 담음
   Future<void> loadData() async {
@@ -59,19 +61,15 @@ class userController extends ControllerMVC {
     return users.length!=0? true : false;
   }
 
-  // 임시코드-삭제
-  Future<void> deleteM() async{
-    await DBConn('delete from tb_user where u_email="u_email 011";');
-  }
-
-  // 임시코드-수정
-  Future<void> updateM() async{
-    await DBConn('update tb_user set u_email="u_email 008" where u_email="DB유"');
-  }
-
   // 로그인
   Future<void> login(String email, String pw) async{
-    await DBConn('select u_pw from tb_user where u_email="${email}"');
+    await DBConn('select u_email from tb_user where u_email="${email}" and u_pw="${pw}"');
+  }
+
+  // admin 제외 가져오기
+  Future<void> list() async{
+    await DBConn('select u_email, u_pw, u_at, u_tel from tb_user where u_email !="admin" group by u_email, u_pw, u_at, u_tel;');
+
   }
 
   // 특정 인덱스의 tb_user 객체를 가져오는 getter

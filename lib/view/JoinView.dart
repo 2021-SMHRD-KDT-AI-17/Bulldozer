@@ -43,15 +43,14 @@ class _JoinPageState extends State<JoinPage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+
     _formController = AnimationController(
       duration: const Duration(milliseconds: 500),
       vsync: this,
     );
-
     _formAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _formController, curve: Curves.easeInOut),
     );
-
     _startAnimationSequence();
   }
 
@@ -77,11 +76,12 @@ class _JoinPageState extends State<JoinPage> with TickerProviderStateMixin {
     });
 
     if (!_validateEmail && !_validatePassword && !_validatePhone) {
+
       bool isExist = await uc.selectM(_emailController.text);
       bool isForbidden=false;
-      String dbtest=_emailController.text.toUpperCase();
-      for (String forbiddenword in forbiddenEmail){
-        if(dbtest.contains(forbiddenword))isForbidden=true;
+      String checkEmailWord=_emailController.text.toUpperCase();
+      for (String forbiddenWord in forbiddenEmail){
+        if(checkEmailWord.contains(forbiddenWord))isForbidden=true;
       }
       if(isForbidden==true){
         Fluttertoast.showToast(msg: "사용 불가능한 이메일 입니다.");
@@ -107,6 +107,12 @@ class _JoinPageState extends State<JoinPage> with TickerProviderStateMixin {
   }
 
   Future<void> _sendVerificationEmail() async { // 백 - 이메일 검증 --완료
+    if(_emailController.text==""){
+      setState(() {
+        _validateEmail = _emailController.text.isEmpty;
+      });
+      return;
+    }
     bool isExist = await uc.selectM(_emailController.text);
     bool isForbidden=false;
     String dbtest=_emailController.text.toUpperCase();
@@ -135,7 +141,7 @@ class _JoinPageState extends State<JoinPage> with TickerProviderStateMixin {
   void _startCountdown() {
     setState(() {
       _isButtonDisabled = true;
-      _buttonText = "인증 남은시간";
+      _buttonText = "T : ";
     });
 
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -186,7 +192,7 @@ class _JoinPageState extends State<JoinPage> with TickerProviderStateMixin {
               const SizedBox(width: 16),
               Expanded(
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0), // 높이 줄임
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(16),
@@ -245,34 +251,11 @@ class _JoinPageState extends State<JoinPage> with TickerProviderStateMixin {
                             color: Colors.deepOrangeAccent,
                           ),
                           onPressed: () {
+                            print("암호 보이기");
                             setState(() {
                               _isPasswordVisible = !_isPasswordVisible;
                             });
                           },
-                        ),
-                      if (buttonText != null)
-                        TextButton(
-                          onPressed: buttonOnPressed,
-                          style: TextButton.styleFrom(
-                            backgroundColor: Colors.deepOrangeAccent,
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              Text(buttonText),
-                              if (_isButtonDisabled)
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 8.0),
-                                  child: Text(
-                                    '${(_countdownTime ~/ 60).toString().padLeft(2, '0')}:${(_countdownTime % 60).toString().padLeft(2, '0')}',
-                                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                            ],
-                          ),
                         ),
                     ],
                   ),
@@ -280,12 +263,40 @@ class _JoinPageState extends State<JoinPage> with TickerProviderStateMixin {
               ),
             ],
           ),
+          if (buttonText != null)
+            Padding(
+              padding: const EdgeInsets.only(left: 64.0, top: 8.0),
+              child: TextButton(
+                onPressed: buttonOnPressed,
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.deepOrangeAccent,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(buttonText),
+                    if (_isButtonDisabled)
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Text(
+                          '${(_countdownTime ~/ 60).toString().padLeft(2, '0')}:${(_countdownTime % 60).toString().padLeft(2, '0')}',
+                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ),
           if (showValidationError)
             const Padding(
-              padding: EdgeInsets.only(left: 64.0),
+              padding: EdgeInsets.only(left: 180.0, top: 10),
               child: Text(
-                '정보를 입력해주세요!',
-                style: TextStyle(color: Colors.red, fontSize: 16),
+                '* 정보를 입력해주세요!',
+                style: TextStyle(color: Colors.pink, fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ),
         ],
@@ -296,6 +307,20 @@ class _JoinPageState extends State<JoinPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar:AppBar(
+        backgroundColor: Colors.amber[500],
+        leading: IconButton(
+
+          icon: Icon(Icons.arrow_back,color: Colors.black87),
+
+          onPressed: () {
+            //뒤로가기
+            Navigator.of(context).pop();
+          },
+        ),
+        title: Text('가입 신청하기',
+          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color : Colors.black87),),
+      ),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -316,17 +341,20 @@ class _JoinPageState extends State<JoinPage> with TickerProviderStateMixin {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Hello",
-                          style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                          child: Text(
+                            "Hello",
+                            style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
+                          ),
                         ),
-                        SizedBox(height: 10),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(
                               "도",
-                              style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.black),
+                              style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.black
+                              ),
                             ),
                             SizedBox(width: 4),
                             Text(
@@ -335,46 +363,101 @@ class _JoinPageState extends State<JoinPage> with TickerProviderStateMixin {
                             ),
                           ],
                         ),
-                        SizedBox(height: 10),
+                        SizedBox(height: 20),
                         Text(
-                          "저희 서비스는 효과적인 불법 사이트와 도박 관련 범죄 예방을 위해 "
+                          "   저희 서비스는 효과적인 불법 사이트와 도박 관련 \n범죄 예방을 위해 "
                               "부단히 노력하고 꾸준한 업데이트 중입니다.",
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.left,
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 30),
+                  const Divider(thickness: 3, color: Colors.white, indent: 170, endIndent: 33,),
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 32.0),
                     child: Align(
-                      alignment: Alignment.centerLeft,
+                      alignment: Alignment.centerRight,
                       child: Text(
-                        '가입 신청하기',
-                        style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white),
-                        textAlign: TextAlign.left,
+                        'Join us',
+                        style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold, color: Colors.white),
+                        textAlign: TextAlign.right,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),//
+                  Padding(
+                    padding: const EdgeInsets.only(left: 32, right: 32),
+                    child: Text(
+                      "   이메일 인증을 완료 후 가입하실 비밀번호를 입력해주세요. 보호자 연락처는 추후 차단 서비스에 이용됩니다.",
+                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                  SizedBox(height: 22,),
                   FadeTransition(
                     opacity: _formAnimation,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 27.0),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 192),
+                                child: Text("E-mail",
+                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black87),
+                                  textAlign: TextAlign.left,
+
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: _isButtonDisabled ? null : _sendVerificationEmail,
+                                style: TextButton.styleFrom(
+                                  backgroundColor: Colors.deepOrange[900],
+                                  foregroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(13),
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(_buttonText),
+                                    if (_isButtonDisabled)
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 8.0),
+                                        child: Text(
+                                          '${(_countdownTime ~/ 60).toString().padLeft(2, '0')}:${(_countdownTime % 60).toString().padLeft(2, '0')}',
+                                          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                           _buildNumberedTextField(
                             number: "①",
                             hintText: '가입하실 E-mail을 입력하세요.',
                             icon: Icons.email,
                             controller: _emailController,
-                            buttonText: _buttonText,
-                            buttonOnPressed: _isButtonDisabled ? null : _sendVerificationEmail,
                             showValidationError: _validateEmail,
                           ),
-                          const SizedBox(height: 16),
+
+                          const SizedBox(height: 4),
+                          const Divider(thickness: 1, color: Colors.white, indent: 48, endIndent: 2,),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 275, top: 10),
+                            child: Text("비밀번호",
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17, color: Colors.black87),
+                              textAlign: TextAlign.left,
+
+                            ),
+                          ),
+                          const SizedBox(height: 10),
                           _buildNumberedTextField(
                             number: "②",
                             hintText: '비밀번호를 입력하세요.',
@@ -384,6 +467,17 @@ class _JoinPageState extends State<JoinPage> with TickerProviderStateMixin {
                             showValidationError: _validatePassword,
                           ),
                           const SizedBox(height: 16),
+                          const Divider(thickness: 1, color: Colors.white, indent: 48, endIndent: 2,),
+                          const SizedBox(height: 10),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 228),
+                            child: Text("보호자 연락처",
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black87),
+                              textAlign: TextAlign.left,
+
+                            ),
+                          ),
+                          const SizedBox(height: 10),
                           _buildNumberedTextField(
                             number: "③",
                             hintText: '보호자 연락처 기입',
@@ -392,20 +486,25 @@ class _JoinPageState extends State<JoinPage> with TickerProviderStateMixin {
                             isDropdown: true,
                             showValidationError: _validatePhone,
                           ),
-                          const SizedBox(height: 24),
+                          SizedBox(height: 20,),
                           ElevatedButton(
                             onPressed: _validateForm,
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.deepOrangeAccent,
+                              backgroundColor: Colors.deepOrange[900],
                               foregroundColor: Colors.white,
                               padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
+                                borderRadius: BorderRadius.circular(14),
                               ),
                               elevation: 5,
                             ),
-                            child: const Text('회원가입', style: TextStyle(fontSize: 18)),
+
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(80, 0, 87, 0),
+                              child: const Text('회원 가입', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                            ),
                           ),
+                          SizedBox(height: 10,),
                         ],
                       ),
                     ),

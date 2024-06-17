@@ -18,10 +18,10 @@ class KotlinForegroundService : Service() {
     private val handler = Handler()
     private val runnableCode: Runnable = object : Runnable {
         override fun run() {
-            Log.d(TAG, "Service is still running")
-            // 알림을 주기적으로 업데이트하는 코드를 추가할 수 있습니다.
-            updateNotification("검사가 활성화 되있습니다")
-            handler.postDelayed(this, 5000) // 5초마다 로그 출력 및 알림 업데이트
+//            Log.d(TAG, "Service is still running")
+//            // 알림을 주기적으로 업데이트하는 코드를 추가할 수 있습니다.
+//            updateNotification("검사가 활성화 되있습니다")
+//            handler.postDelayed(this, 5000) // 5초마다 로그 출력 및 알림 업데이트
         }
     }
 
@@ -68,7 +68,7 @@ class KotlinForegroundService : Service() {
         val notification: Notification = NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("My App Service 문구 테스트")
                 .setContentText("Running in the background 감시중")
-//                .setSmallIcon(R.drawable.ic_notification)  // 리소스 추가 필요
+                .setSmallIcon(R.drawable.ic_notification)  // 리소스 추가 필요
                 .setContentIntent(pendingIntent)
                 .build()
 
@@ -82,7 +82,7 @@ class KotlinForegroundService : Service() {
         val notification: Notification = NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("My App Service")
                 .setContentText(contentText)
-//                .setSmallIcon(R.drawable.ic_notification)  // 리소스 추가 필요
+                .setSmallIcon(R.drawable.ic_notification)  // 리소스 추가 필요
                 .setContentIntent(pendingIntent)
                 .build()
 
