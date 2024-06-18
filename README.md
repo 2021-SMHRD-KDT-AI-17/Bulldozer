@@ -32,7 +32,7 @@
         <td>Language</td>
         <td>
             <img src="https://img.shields.io/badge/Kotlin-7F52FF?style=for-the-badge&logo=Kotlin&logoColor=white"/>
-            <img src="https://img.shields.io/badge/dart-#0175C2?style=for-the-badge&logo=dart&logoColor=white"/>
+            <img src="https://img.shields.io/badge/dart-0175C2?style=for-the-badge&logo=dart&logoColor=white"/>
             <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white"/> 
         </td>
     </tr>
@@ -54,7 +54,7 @@
         <td>Server</td>
         <td>
           <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=Flask&logoColor=white"/>
-          <img src="https://img.shields.io/badge/ngrok-#1F1E37?style=for-the-badge&logo=ngrok&logoColor=white"/> 
+          <img src="https://img.shields.io/badge/ngrok-1F1E37?style=for-the-badge&logo=ngrok&logoColor=white"/> 
         </td>
     </tr>
     <tr>
@@ -66,8 +66,8 @@
     <tr>
          <td>Model</td>
          <td>
-             <img src="https://img.shields.io/badge/EasyOCR-#0099B0?style=for-the-badge&logo=EasyOCR&logoColor=white"/>
-             <img src="https://img.shields.io/badge/opencv-#5C3EE8?style=for-the-badge&logo=opencv&logoColor=white"/> 
+             <img src="https://img.shields.io/badge/EasyOCR-0099B0?style=for-the-badge&logo=EasyOCR&logoColor=white"/>
+             <img src="https://img.shields.io/badge/opencv-5C3EE8?style=for-the-badge&logo=opencv&logoColor=white"/> 
          </td>
     </tr>
     <tr>
@@ -75,16 +75,16 @@
         <td>
             <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=Git&logoColor=white"/>
             <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white"/>
-            <img src="https://img.shields.io/badge/Miro-#050038?style=for-the-badge&logo=Miro&logoColor=white"/>
+            <img src="https://img.shields.io/badge/Miro-050038?style=for-the-badge&logo=Miro&logoColor=white"/>
         </td>
     </tr>
       <tr>
         <td>Library</td>
         <td>
-            <img src="https://img.shields.io/badge/openai-#412991?style=for-the-badge&logo=openai&logoColor=black">
-            <img src="https://img.shields.io/badge/naver-#03C75A?style=for-the-badge&logo=Naver Open Api&logoColor=white">
+            <img src="https://img.shields.io/badge/openai-412991?style=for-the-badge&logo=openai&logoColor=black">
+            <img src="https://img.shields.io/badge/naver-03C75A?style=for-the-badge&logo=Naver Open Api&logoColor=white">
             <img src="https://img.shields.io/badge/Firebase-FFCA28?style=flat-square&logo=firebase&logoColor=black"/>
-            <img src="https://img.shields.io/badge/google-#4285F4?style=for-the-badge&logo=Google Vision&logoColor=white"/> 
+            <img src="https://img.shields.io/badge/google-4285F4?style=for-the-badge&logo=Google Vision&logoColor=white"/> 
         </td>
     </tr>
 </table>
