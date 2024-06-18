@@ -380,8 +380,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 children: [
                   Positioned(
                     bottom: 10,
-                    left: 9,
-                    child: Container(height: 2, width: 58, color: Colors.amber,
+                    left: 11,
+                    child: Container(
+                      height: 2,width: 64,color: Colors.amber,
                     ),
                   ),
                   TextButton(

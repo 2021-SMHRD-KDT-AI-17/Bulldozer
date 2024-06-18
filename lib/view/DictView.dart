@@ -22,6 +22,7 @@ class _DictionaryPageState extends StateMVC<DictionaryPage> with SingleTickerPro
   late dictController DictController;
   late AnimationController _animationController;
   late Animation<double> _animation;
+  late ScrollController _scrollController;
   bool isLoading = true;
 
   TextEditingController insertWCon = TextEditingController();
@@ -32,6 +33,7 @@ class _DictionaryPageState extends StateMVC<DictionaryPage> with SingleTickerPro
     insertWCon.dispose();
     insertNCon.dispose();
     _animationController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -104,6 +106,7 @@ class _DictionaryPageState extends StateMVC<DictionaryPage> with SingleTickerPro
       parent: _animationController,
       curve: Curves.easeIn,
     );
+    _scrollController = ScrollController();
     _loadData();
   }
 
@@ -277,8 +280,8 @@ class _DictionaryPageState extends StateMVC<DictionaryPage> with SingleTickerPro
       appBar: AppBar(
         backgroundColor: Colors.amber,
         title: Padding(
-          padding: const EdgeInsets.only(left: 68),
-          child: Text('단어사전 열람', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),),
+          padding: const EdgeInsets.only(left: 73),
+          child: Text('단어사전 열람', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
         ),
       ),
       drawer: Drawer(
@@ -438,7 +441,7 @@ class _DictionaryPageState extends StateMVC<DictionaryPage> with SingleTickerPro
               endIndent: 30,
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 150, top: 70),
+              padding: const EdgeInsets.only(left: 120, top: 160),
               child: ListTile(
                 leading: Icon(
                   Icons.exit_to_app,
@@ -598,9 +601,11 @@ class _DictionaryPageState extends StateMVC<DictionaryPage> with SingleTickerPro
                   Expanded(
                     child: Scrollbar(
                       thumbVisibility: true,
+                      controller: _scrollController,
                       thickness: 8.0,
                       radius: Radius.circular(16),
                       child: ListView.builder(
+                        controller: _scrollController,
                         itemCount: displayWords.length,
                         itemBuilder: (context, index) {
                           if (searchWord.isNotEmpty &&

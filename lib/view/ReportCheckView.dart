@@ -1,8 +1,13 @@
+import 'package:bulldozer/view/AdminView.dart';
+import 'package:bulldozer/view/DictView.dart';
+import 'package:bulldozer/view/UrlListView.dart';
+import 'package:bulldozer/view/UserListView.dart';
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import '../../controller/ReportController.dart';
 import '../../view/ReportDetailView.dart';
 import 'package:rive/rive.dart';
+import 'package:flutter/src/painting/gradient.dart' as flutterPainting;
 
 
 import 'package:bulldozer/db.dart';
@@ -32,7 +37,7 @@ class _ReportCheckPageState extends StateMVC<ReportCheckPage> {
     _loadData();
   }
 
-  Future<void> _loadData() async {
+  Future<void> _loadData() async {//여기 유의
     await ReportController.loadData();
     setState(() {
       reports = List<List<dynamic>>.from(ReportController.reports.map((report) => [
@@ -40,6 +45,9 @@ class _ReportCheckPageState extends StateMVC<ReportCheckPage> {
         report.getEmail,
         report.getAddress,
         report.getDescript,
+        report.getAnalysis,
+        report.getTitle,
+        report.getAt
       ]));
     });
   }
@@ -64,13 +72,196 @@ class _ReportCheckPageState extends StateMVC<ReportCheckPage> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           title: Padding(
-            padding: const EdgeInsets.only(left: 62),
+            padding: const EdgeInsets.only(left: 57),
             child: Text(
               '신고/건의 게시판',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
             ),
           ),
           backgroundColor: Colors.amber[500],
+        ),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  gradient: flutterPainting.LinearGradient( // flutterPainting 별칭 사용
+                    colors: [
+                      Colors.amber,
+                      Colors.deepOrange,
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: Image.asset('images/free-icon-admin-1085798.png',
+                          width: 100, height: 100),
+                    ),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    VerticalDivider(
+                      thickness: 2,
+                      color: Colors.amber[800],
+                      indent: 10,
+                      endIndent: 10,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 55, left: 15),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Admin님 \n환영합니다.",
+                            style: TextStyle(
+                              color: Colors.black87,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 30,),
+              Padding(
+                padding: const EdgeInsets.only(left: 10, top: 10, bottom: 0),
+                child: ListTile(
+                  leading: Icon(
+                    Icons.home,
+                    size: 28,
+                    color: Colors.amber[800],
+                  ),
+                  title: Text(
+                    " 메인 화면",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.black87),
+                  ),
+                  onTap: () {
+                    // 홈 화면으로 이동
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => AdminPage()));
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 10, top: 10),
+                child: ListTile(
+                  leading: Icon(
+                    Icons.playlist_add_check_rounded,
+                    size: 28,
+                    color: Colors.amber[800],
+                  ),
+                  title: Text(
+                    " 신고/건의 게시판",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.black87),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                        context, MaterialPageRoute(builder: (_) => ReportCheckPage()));
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 10, top: 10),
+                child: ListTile(
+                  leading: Icon(
+                    Icons.people_outline_rounded,
+                    size: 28,
+                    color: Colors.amber[800],
+                  ),
+                  title: Text(
+                    " 회원 관리",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.black87),
+                  ),
+                  onTap: () {
+                    // 회원 관리 페이지로 이동
+                    Navigator.push(
+                        context, MaterialPageRoute(builder: (_) => UserList()));
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 10, top: 10),
+                child: ListTile(
+                  leading: Icon(
+                    Icons.warning,
+                    size: 28,
+                    color: Colors.amber[800],
+                  ),
+                  title: Text(
+                    " 유해 사이트 목록",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.black87),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                        context, MaterialPageRoute(builder: (_) => HarmSiteList()));
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 10, top: 10),
+                child: ListTile(
+                  leading: Icon(
+                    Icons.book_rounded,
+                    size: 28,
+                    color: Colors.amber[800],
+                  ),
+                  title: Text(
+                    " 단어 사전 열람",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                        context, MaterialPageRoute(builder: (_) => DictionaryPage()));
+                  },
+                ),
+              ),
+              SizedBox(height: 60,),
+              Divider(
+                thickness: 2,
+                color: Colors.amber[800],
+                indent: 30,
+                endIndent: 30,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 120, top: 150),
+                child: ListTile(
+                  leading: Icon(
+                    Icons.exit_to_app,
+                    size: 28,
+                    color: Colors.amber[800],
+                  ),
+                  title: Text(
+                    "로그아웃",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.black87),
+                  ),
+                  onTap: () {
+                    // Exit 처리
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
         body: Column(
           children: [
@@ -97,8 +288,13 @@ class _ReportCheckPageState extends StateMVC<ReportCheckPage> {
                       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(width: 1, color: Colors.black87),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border(
+                          top: BorderSide(color: Colors.black, width: 1),
+                          left: BorderSide(color: Colors.black, width: 1),
+                          right: BorderSide(color: Colors.black, width: 6),
+                          bottom: BorderSide(color: Colors.black, width: 6),
+                        ),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(0.7),
@@ -149,13 +345,13 @@ class _ReportCheckPageState extends StateMVC<ReportCheckPage> {
             Row(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 120, bottom: 5),
+                  padding: const EdgeInsets.only(left: 20, right: 80, bottom: 5),
                   child: Text("신고 목록",
                     textAlign: TextAlign.start,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(right: 20),
+                  padding: const EdgeInsets.only(right: 30, top: 16),
                   child: Text("클릭시 상세 내용으로 이동합니다.",
                     style: TextStyle(fontSize: 11, color: Colors.blueGrey),),
                 )
@@ -264,7 +460,7 @@ class _ReportCheckPageState extends StateMVC<ReportCheckPage> {
                         decoration: BoxDecoration(
                           color: _currentPage == index + 1 ? Colors.blue : Colors.transparent,
                           borderRadius: BorderRadius.circular(5),
-                          border: Border.all(width: 1,color: Colors.black87),
+                          border: Border.all(width: 1, color: Colors.black87),
                         ),
                         padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                         child: Text(

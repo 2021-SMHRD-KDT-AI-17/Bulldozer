@@ -1,20 +1,19 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:bulldozer/smsService.dart';
 import 'package:bulldozer/view/ReportView.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 import '../../constants/animated_toggle_button.dart';
-// import 'package:bulldozer/view/ReportCheckView.dart';
 import '../../constants/theme_color.dart';
 import '../../controller/UserconHisController.dart';
 import '../../controller/UserController.dart';
+import '../../controller/ReportController.dart';
 import 'package:flutter/material.dart';
-import '../../constants/colors.dart';
 import '../../painter/liquid_painter.dart';
 import '../../painter/radial_painter.dart';
-// import 'package:bulldozer/view/ReportView.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../flaskVerifi.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -46,6 +45,11 @@ class _UserMainState extends State<UserMain> with TickerProviderStateMixin {
 
   late userController UserController;
   late userconHisController UserconHisController;
+  final smsService sms = smsService();
+  //알림창
+  final TextEditingController _controller = TextEditingController();
+  bool isDoneEnabled = false;
+  //
 
   _UserMainState() : super() {
     UserController = userController();
@@ -125,6 +129,8 @@ class _UserMainState extends State<UserMain> with TickerProviderStateMixin {
       });
 
     _fadeController.forward();
+    //알림창
+    _controller.addListener(_detectionInput);
   }
 
   @override
@@ -136,17 +142,157 @@ class _UserMainState extends State<UserMain> with TickerProviderStateMixin {
     _fadeController.dispose();
     _scrollController.dispose();
     super.dispose();
+    //알림창
+    _controller.removeListener(_detectionInput);
+    _controller.dispose();
   }
+  //detectionPage
+  void _detectionInput() {
+    setState(() {
+      isDoneEnabled = _controller.text.trim() == "확인했습니다";
+    });
+    print("Current input: ${_controller.text.trim()}"); // 디버깅을 위해 입력값 출력
+    print("isDoneEnabled: $isDoneEnabled"); // 디버깅을 위해 상태 출력
+  }
+  void _showAlert(BuildContext context,String url) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            void _localCheckInput() {
+              setState(() {
+                isDoneEnabled = _controller.text.trim() == "알겠습니다";
+              });
+              print("Current input: ${_controller.text.trim()}"); // 디버깅을 위해 입력값 출력
+              print("isDoneEnabled: $isDoneEnabled"); // 디버깅을 위해 상태 출력
+            }
 
+            _controller.addListener(_localCheckInput);
+
+            return AlertDialog(
+              content: SingleChildScrollView(
+                child: Container(
+                  width: double.maxFinite,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset(
+                        "images/icons/free-animated-icon-speech-bubble-8716771.png",
+                        scale: 4,
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        '${url}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        "도박배너가 포함된 사이트로 인식되었습니다.\n보호자에게 메시지가 발송 되었습니다.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "Pretendard",
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Text.rich(
+                        TextSpan(
+                          text: '내용을 숙지하셨다면 ',
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: ' "알겠습니다" ',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.redAccent,
+                                fontSize: 16,
+                              ),
+                            ),
+                            TextSpan(
+                              text: '를\n입력 후 완료 버튼을 눌러주세요.',
+                            ),
+                          ],
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 20),
+                      TextField(
+                        controller: _controller,
+                        decoration: InputDecoration(
+                          hintText: '알겠습니다',
+                          border: OutlineInputBorder(),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ElevatedButton(
+                            onPressed: isDoneEnabled
+                                ? () {
+                              Navigator.of(context).pop();
+                            }
+                                : null,
+                            child: Text('완료'),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: isDoneEnabled ? Colors.yellow : Colors.grey,
+                              side: BorderSide(
+                                width: 2,
+                                color: Colors.black87,
+                              ),
+                            ),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              reportController ReportController=reportController();
+                              ReportController.insertReport(_userE!, url, "유해사이트 접속 후 신고");
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(
+                              '신고하기',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red,
+                              side: BorderSide(
+                                width: 2,
+                                color: Colors.black87,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
+    ).then((_) {
+      _controller.text="";
+      // _controller.removeListener(_detectionInput); // 팝업이 닫힐 때 리스너 제거
+    });
+  }
+  //
   // 토글 버튼 상태 변경 함수
   void _toggleAnimation(int index) async {
     if(urlVerifi==null)urlVerifi=await verifi.getInstance();
     setState(() {
       _isSwitchOn = index == 1;
       if (_isSwitchOn) {
-        _animationController.forward();
+        sms.sendConinfo(_userT!,1);
         startForegroundService();
+        _animationController.forward();
       } else {
+        sms.sendConinfo(_userT!,0);
         stopForegroundService();
         _animationController.duration =
         const Duration(milliseconds: _setDuration);
@@ -180,7 +326,13 @@ class _UserMainState extends State<UserMain> with TickerProviderStateMixin {
 
             _recentUrl=_url;
             bool isHarm= await urlVerifi!.webAnalyze(_recentUrl,_userE);
-            if(isHarm==true)_recentUrl="";
+            print("!!!");
+            print(isHarm);
+            if(isHarm==true){
+              print("유해판단");
+              _showAlert(context,_recentUrl);
+              _recentUrl="test23";
+            }
             else _backUrl=_recentUrl;
           }
         }
@@ -258,7 +410,7 @@ class _UserMainState extends State<UserMain> with TickerProviderStateMixin {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
-                      fontSize: 28,
+                      fontSize: 24,
                     ),
                   ),
                 ),
@@ -489,7 +641,7 @@ class _UserMainState extends State<UserMain> with TickerProviderStateMixin {
                         Padding(
                           padding: const EdgeInsets.only(top:26),
                           child: Text(
-                            "   도박, 예방합시다",
+                            " 도박, 예방합시다",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 28, // 글씨 크기 줄임
@@ -501,7 +653,7 @@ class _UserMainState extends State<UserMain> with TickerProviderStateMixin {
                         SizedBox(width: 10),
                         // Rive 애니메이션 추가
                         SizedBox(
-                          width: 130,
+                          width: 124,
                           height: 130,
                           child: rive.RiveAnimation.asset(
                             'assets/new_plant_test.riv', // Rive 애니메이션 파일 경로
@@ -516,9 +668,9 @@ class _UserMainState extends State<UserMain> with TickerProviderStateMixin {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "왜 사람들은 도박에 빠지는가?",
+                          '          "왜 사람들은 도박에 빠지는가?"',
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 19,
                             fontWeight: FontWeight.bold,
                             color: _isSwitchOn ? Colors.black : Colors.white,
                           ),
@@ -595,8 +747,7 @@ class _UserMainState extends State<UserMain> with TickerProviderStateMixin {
                                           : Colors.black87),
                                   padding: EdgeInsets.all(8),
                                   child: Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                    crossAxisAlignment:CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         '모험을 좋아하고 심심함을 채우기 위해',
@@ -641,8 +792,7 @@ class _UserMainState extends State<UserMain> with TickerProviderStateMixin {
                                           : Colors.black54),
                                   padding: EdgeInsets.all(8),
                                   child: Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                    crossAxisAlignment:CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         '도박을 통해 잃은 돈을 만회하고 싶은',
@@ -725,8 +875,7 @@ class _UserMainState extends State<UserMain> with TickerProviderStateMixin {
                                           : Colors.black12),
                                   padding: EdgeInsets.all(8),
                                   child: Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                    crossAxisAlignment:CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         '건강이 악화되어 신체적 혹은 정서적 고통을',
@@ -811,11 +960,7 @@ class _UserMainState extends State<UserMain> with TickerProviderStateMixin {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 30),
-                    // Container(
-                    //   height: 300, // 임시 높이 설정
-                    //   child: NewsBoard(),
-                    // ),
+
                     const SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.only(right: 250, bottom: 20),
@@ -824,12 +969,11 @@ class _UserMainState extends State<UserMain> with TickerProviderStateMixin {
                             color: _isSwitchOn ? Colors.black87 : Colors.amber[700],
                             fontWeight: FontWeight.bold,
                             fontSize: 19
-
                         ),
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.all(16),
+                      padding: EdgeInsets.all(12),
                       decoration: BoxDecoration(
                         color: _isSwitchOn ? Colors.white : Colors.black12,
                         borderRadius: BorderRadius.circular(20),

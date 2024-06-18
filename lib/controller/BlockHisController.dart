@@ -22,7 +22,7 @@ class blockHisController extends ControllerMVC {
   final List<tb_block_his> blocks = [];
 
   Future<void> loadData() async{
-    await DBConn('select * from tb_block_his');
+    await DBConn('select * from tb_block_his order by block_at DESC;');
     blocks.clear();
 
     // tb_block_his 객체 리스트로 변환

@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:fluttertoast/fluttertoast.dart';
 import '../../controller/WebController.dart';
 
 class verifi{
@@ -49,8 +48,10 @@ class verifi{
   Future<bool> webAnalyze(url, email) async{
     bool isOk = false;
     String webURL=urlTreatment(url);
-    isOk = await isfWebInList(webURL);
-    if(isOk==true) return false;
+    int res=await isfWebInList(webURL);
+    if(res!=-1){
+      return res==0?false:true;
+    };
     if (sleepTime==false) sleepTime=true;
     Future.delayed(Duration(microseconds: 550)).then((e) => sleepTime=false);
     isOk= await toFlask(webURL, email,ngrokDomain);
@@ -59,8 +60,10 @@ class verifi{
   Future<bool> webAnalyzeTestver(url, email) async {
     bool isOk = false;
     String webURL=urlTreatment(url);
-    isOk = await isfWebInList(webURL);
-    if(isOk==true) return false;
+    int res=await isfWebInList(webURL);
+    if(res!=-1){
+      return res==0?false:true;
+    };
     if (sleepTime==false) sleepTime=true;
     Future.delayed(Duration(microseconds: 550)).then((e) => sleepTime=false);
     isOk= await toFlask(webURL, email,"http://192.168.219.66:5000");
@@ -83,7 +86,7 @@ class verifi{
     print("urlTreatment : ${resURL}");
     return resURL;
   }
-  Future<bool> isfWebInList(url) async{
+  Future<int> isfWebInList(url) async{
     print("webInList");
     print(url);
     print(url=="google.com");
@@ -93,16 +96,16 @@ class verifi{
         print("차단 리스트에 포함된 URL");
         await platform.invokeMethod('launchBulldozer');  // isOk가 true일 때 메세지 전송
         detection(url);
-        return true;
+        return 1;
       }
     }
     for (String wUrl in whiteList) {
       if (url.contains(wUrl)) {
         print("허용 리스트에 포함된 URL.");
-        return true;
+        return 0;
       }
     }
-    return false;
+    return -1;
   }
   Future<bool> toFlask(url, email ,myDomain) async{
     bool isHarmWeb=false;
@@ -131,9 +134,7 @@ class verifi{
   }
   Future<void> detection(url) async{
     await Future.delayed(Duration(milliseconds: 990));
-    Fluttertoast.showToast(msg: "${url} > 유해사이트로 판단 되었습니다",toastLength: Toast.LENGTH_LONG);
-    print(_instance.email);
-    print(url);
+    blackList.add(url);
     bhc.insertBlock(_instance.email,url);
     sms.sendWebinfo(_instance.phone,url);
   }

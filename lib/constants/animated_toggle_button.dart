@@ -35,7 +35,7 @@ class _AnimatedToggleState extends State<AnimatedToggle> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Container(
-      width: width * 0.6,
+      width: width * 0.7,
       height: width * 0.11,
       margin: EdgeInsets.fromLTRB(2, 4, 2, 4),
       child: Stack(
@@ -48,7 +48,7 @@ class _AnimatedToggleState extends State<AnimatedToggle> {
               widget.onToggleCallback(initialPosition ? 0 : 1);
             },
             child: Container(
-              width: width * 0.7,
+              width: width * 0.78,
               height: width * 0.12,
               decoration: ShapeDecoration(
                 color: widget.backgroundColor,

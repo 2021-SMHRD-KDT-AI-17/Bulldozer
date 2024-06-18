@@ -27,7 +27,7 @@ class userController extends ControllerMVC {
 
   // tb_user 객체에 결과를 담음
   Future<void> loadData() async {
-    await DBConn('select * from tb_user');
+    await DBConn('select * from tb_user where u_email !="admin"');
     users.clear();
 
     // tb_user 객체 리스트로 변환

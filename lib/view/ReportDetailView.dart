@@ -99,6 +99,17 @@ class _ReportDetailPageState extends StateMVC<ReportDetailPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 5, bottom: 10),
+                            child: Text(
+                              '작성자',
+                              style: TextStyle(
+                                color: Colors.black87,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
                           Table(
                             border: TableBorder.all(
                               color: Colors.black87,
@@ -106,10 +117,11 @@ class _ReportDetailPageState extends StateMVC<ReportDetailPage> {
                               width: 2,
                             ),
                             columnWidths: const {
-                              0: FlexColumnWidth(1),
-                              1: FlexColumnWidth(2),
+                              0: FlexColumnWidth(4),
+                              1: FlexColumnWidth(9),
                             },
                             children: [
+
                               TableRow(
                                 children: [
                                   Container(
@@ -121,7 +133,7 @@ class _ReportDetailPageState extends StateMVC<ReportDetailPage> {
                                           "이메일",
                                           style: TextStyle(
                                             color: Colors.black87,
-                                            fontSize: 15,
+                                            fontSize: 14,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
@@ -134,7 +146,7 @@ class _ReportDetailPageState extends StateMVC<ReportDetailPage> {
                                       widget.report.length > 1 ? widget.report[1] : 'N/A', // 유효성 검사
                                       style: TextStyle(
                                         color: Colors.black87,
-                                        fontSize: 15,
+                                        fontSize: 13,
                                       ),
                                     ),
                                   ),
@@ -151,7 +163,7 @@ class _ReportDetailPageState extends StateMVC<ReportDetailPage> {
                                           "신고 일자",
                                           style: TextStyle(
                                             color: Colors.black87,
-                                            fontSize: 15,
+                                            fontSize: 14,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
@@ -164,7 +176,7 @@ class _ReportDetailPageState extends StateMVC<ReportDetailPage> {
                                       widget.report.length > 6 ? widget.report[6] : 'N/A', // 유효성 검사
                                       style: TextStyle(
                                         color: Colors.black87,
-                                        fontSize: 15,
+                                        fontSize: 14,
                                       ),
                                     ),
                                   ),
@@ -172,9 +184,9 @@ class _ReportDetailPageState extends StateMVC<ReportDetailPage> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 15),
+                          SizedBox(height: 26),
                           Padding(
-                            padding: const EdgeInsets.only(bottom: 15),
+                            padding: const EdgeInsets.only(left: 5, bottom: 15),
                             child: Text(
                               '신고 URL',
                               style: TextStyle(
@@ -192,7 +204,7 @@ class _ReportDetailPageState extends StateMVC<ReportDetailPage> {
                             ),
                             padding: EdgeInsets.all(16.0),
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.orange[800]!),
+                              border: Border.all(color: Colors.black87, width: 2),
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             child: Text(
@@ -200,9 +212,9 @@ class _ReportDetailPageState extends StateMVC<ReportDetailPage> {
                               style: TextStyle(fontSize: 16.0),
                             ),
                           ),
-                          SizedBox(height: 22),
+                          SizedBox(height: 30),
                           Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
+                            padding: const EdgeInsets.only(left: 5, bottom: 10),
                             child: Text(
                               '상세 신고 내용',
                               style: TextStyle(
@@ -220,7 +232,7 @@ class _ReportDetailPageState extends StateMVC<ReportDetailPage> {
                             ),
                             padding: EdgeInsets.all(8.0),
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.orange[800]!),
+                              border: Border.all(color: Colors.black87, width: 2),
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             child: Text(
@@ -228,6 +240,7 @@ class _ReportDetailPageState extends StateMVC<ReportDetailPage> {
                               style: TextStyle(fontSize: 16.0),
                             ),
                           ),
+                          SizedBox(height: 10,),
                         ],
                       ),
                     ),
@@ -254,7 +267,7 @@ class _ReportDetailPageState extends StateMVC<ReportDetailPage> {
                               Text(
                                 '신고 분석 결과',
                                 style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 19, color: Colors.black87),
+                                    fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black87),
                               ),
                               SizedBox(height: 18),
                               Row(
@@ -279,7 +292,7 @@ class _ReportDetailPageState extends StateMVC<ReportDetailPage> {
                                       "유해 사이트입니다.",
                                       // widget.report[4],
                                       textAlign: TextAlign.center,
-                                      // 이 부분 유해사이트라고 판단되면 "유햐 사이트입니다.", 아니면 "비유해 사이트입니다."
+                                      // 이 부분 유해사이트라고 판단되면 "유해 사이트입니다.", 아니면 "합법 사이트입니다."
                                       style: TextStyle(
                                         fontSize: 16, fontWeight: FontWeight.bold,
                                       ),
@@ -294,23 +307,27 @@ class _ReportDetailPageState extends StateMVC<ReportDetailPage> {
                                   TextButton(
                                     onPressed: () => Navigator.of(context).pop(),
                                     child: Text('이전으로',
-                                        style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold)),
+                                        style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold, fontSize: 16)),
                                   ),
                                   TextButton(
                                     onPressed: () {
                                       _deleteReport(widget.report[1], int.parse(widget.report[0]));
                                     },
                                     child: Text('삭제하기',
-                                        style: TextStyle(color: Colors.red[800], fontWeight: FontWeight.bold)),
+                                        style: TextStyle(color: Colors.red[900], fontWeight: FontWeight.bold, fontSize: 16)),
                                   ),
                                 ],
                               ),
+                              SizedBox(height: 1,),
                             ],
                           ),
+
                         ),
+
                       ),
                     ),
                   ),
+                  SizedBox(height: 10,),
                 ],
               ),
             ),

@@ -110,7 +110,6 @@ class _AdminPage2State extends StateMVC<AdminPage> with SingleTickerProviderStat
     });
     print("Week Data: $weekData");
   }
-
   Future<void> loadSixMonthsData() async {
     final data = await BlockHisController.getSixMonths();
     setState(() {
@@ -118,7 +117,6 @@ class _AdminPage2State extends StateMVC<AdminPage> with SingleTickerProviderStat
     });
     print("Six Months Data: $sixMonthsData");
   }
-
   Future<void> loadYearData() async {
     final data = await BlockHisController.getYear();
     setState(() {
@@ -126,7 +124,6 @@ class _AdminPage2State extends StateMVC<AdminPage> with SingleTickerProviderStat
     });
     print("Year Data: $yearData");
   }
-
   Future<void> loadGeneralData() async {
     final data = await getData();
     setState(() {
@@ -221,6 +218,8 @@ class _AdminPage2State extends StateMVC<AdminPage> with SingleTickerProviderStat
 
   @override
   Widget build(BuildContext context) {
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('yyyy-MM-dd HH:mm').format(now);
     return Scaffold(
       appBar: AppBar(
         title: Padding(
@@ -256,9 +255,7 @@ class _AdminPage2State extends StateMVC<AdminPage> with SingleTickerProviderStat
                     child: Image.asset('images/free-icon-admin-1085798.png',
                         width: 100, height: 100),
                   ),
-                  SizedBox(
-                    width: 15,
-                  ),
+                  SizedBox(width: 15,),
                   VerticalDivider(
                     thickness: 2,
                     color: Colors.amber[800],
@@ -275,9 +272,8 @@ class _AdminPage2State extends StateMVC<AdminPage> with SingleTickerProviderStat
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Image.asset('images/free-icon-administrator-3875108.png', width: 50, height: 50),
                         Text(
-                          "Admin님 \n환영합니다.",
+                          "관리자님 \n환영합니다.",
                           style: TextStyle(
                             color: Colors.black87,
                             fontSize: 15,
@@ -325,7 +321,6 @@ class _AdminPage2State extends StateMVC<AdminPage> with SingleTickerProviderStat
                       fontWeight: FontWeight.bold, color: Colors.black87),
                 ),
                 onTap: () {
-
                   Navigator.push(
                       context, MaterialPageRoute(builder: (_) =>  ReportCheckPage()));
                 },
@@ -360,7 +355,7 @@ class _AdminPage2State extends StateMVC<AdminPage> with SingleTickerProviderStat
                   color: Colors.amber[800],
                 ),
                 title: Text(
-                  " 유해 사이트 목록",
+                  " 유해사이트 목록 ",
                   style: TextStyle(
                       fontWeight: FontWeight.bold, color: Colors.black87),
                 ),
@@ -401,7 +396,7 @@ class _AdminPage2State extends StateMVC<AdminPage> with SingleTickerProviderStat
 
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 150, top: 70),
+              padding: const EdgeInsets.only(left: 120, top: 150),
               child: ListTile(
                 leading: Icon(
                   Icons.exit_to_app,
@@ -415,7 +410,6 @@ class _AdminPage2State extends StateMVC<AdminPage> with SingleTickerProviderStat
                 ),
                 onTap: () {
                   Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => MyHomePage(),),(Route<dynamic>route)=>false);
-                  // Exit 처리
                 },
               ),
             ),
@@ -432,7 +426,7 @@ class _AdminPage2State extends StateMVC<AdminPage> with SingleTickerProviderStat
             child: Column(
               children: [
                 Container(
-                  padding: const EdgeInsets.all(6),
+                  padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
                     color: Colors.amber[400],
                     borderRadius: BorderRadius.only(
@@ -448,6 +442,11 @@ class _AdminPage2State extends StateMVC<AdminPage> with SingleTickerProviderStat
                         child: RichText(
                           text: TextSpan(
                             children: [
+                              TextSpan(text: '빈칸',
+                                  style: TextStyle(
+                                    color: Colors.amber,
+                                    fontSize: 7,
+                                  )),
                               TextSpan(
                                 text: '총 ',
                                 style: TextStyle(
@@ -464,16 +463,18 @@ class _AdminPage2State extends StateMVC<AdminPage> with SingleTickerProviderStat
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
+
                               TextSpan(
-                                text: ' 개의 유해사이트를 \n',
+                                text: ' 개의 유해사이트를\n',
                                 style: TextStyle(
                                   color: Colors.black87,
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
+
                               TextSpan(
-                                text: '   $totalCount',
+                                text: '$totalCount',
                                 style: TextStyle(
                                   color: Colors.redAccent[700],
                                   fontSize: 28, // 원하는 크기로 설정
@@ -502,7 +503,7 @@ class _AdminPage2State extends StateMVC<AdminPage> with SingleTickerProviderStat
                     child: Row(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(top: 30),
+                          padding: const EdgeInsets.only(top: 65),
                           child: Text(
                             "  유해 사이트 검출 현황",
                             style: TextStyle(
@@ -510,10 +511,10 @@ class _AdminPage2State extends StateMVC<AdminPage> with SingleTickerProviderStat
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 92,),
+                          padding: const EdgeInsets.only(left: 50,),
                           child: SizedBox(
-                            width: 80,
-                            height: 80,
+                            width: 120,
+                            height: 120,
                             child: RiveAnimation.asset(
                               'assets/c4real_graph_icon.riv',
                               controllers: [_riveController],
@@ -536,7 +537,7 @@ class _AdminPage2State extends StateMVC<AdminPage> with SingleTickerProviderStat
                           });
                         },
                         child: Text(
-                          '최근 1주일',
+                          ' 최근 1주일',
                           style: TextStyle(
                               color: Colors.black87,
                               fontWeight: FontWeight.bold,
@@ -559,7 +560,7 @@ class _AdminPage2State extends StateMVC<AdminPage> with SingleTickerProviderStat
                           });
                         },
                         child: Text(
-                          '최근 6개월',
+                          ' 최근 6개월',
                           style: TextStyle(
                               color: Colors.black87,
                               fontWeight: FontWeight.bold,
@@ -582,7 +583,7 @@ class _AdminPage2State extends StateMVC<AdminPage> with SingleTickerProviderStat
                           });
                         },
                         child: Text(
-                          ' 최근 1년 ',
+                          '  최근 1년  ',
                           style: TextStyle(
                               color: Colors.black87,
                               fontWeight: FontWeight.bold,
@@ -598,15 +599,15 @@ class _AdminPage2State extends StateMVC<AdminPage> with SingleTickerProviderStat
                     ),
                   ],
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 20),
                 Container(
                   height: 200,
-                  width: 340, // 차트의 넓이를 늘립니다.
+                  width: 350, // 차트의 넓이를 늘립니다.
                   color: Colors.white70, // 차트 영역
                   child: BarChart(
                     BarChartData(
                       alignment: BarChartAlignment.spaceAround,
-                      maxY: selectedPeriod == 0 ? 500 : 4000,
+                      maxY: selectedPeriod == 0 ? 500 : 5000,
                       barTouchData: BarTouchData(enabled: false),
                       gridData: FlGridData(
                         show: true,
@@ -616,8 +617,8 @@ class _AdminPage2State extends StateMVC<AdminPage> with SingleTickerProviderStat
                             // 원하는 위치에 점선을 그립니다.
                             return FlLine(
                               color: Colors.grey,
-                              strokeWidth: 2,
-                              dashArray: [3, 3], // 점선 설정
+                              strokeWidth: 3,
+                              dashArray: [3, 5], // 점선 설정
                             );
                           }
                           return FlLine(
@@ -644,11 +645,11 @@ class _AdminPage2State extends StateMVC<AdminPage> with SingleTickerProviderStat
                               const style = TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 12,
+                                fontSize: 11,
                               );
                               return SideTitleWidget(
                                 axisSide: meta.axisSide,
-                                space: 8.0, // 적절한 여백 설정
+                                space: 6.0, // 적절한 여백 설정
                                 child: Text(
                                     getTitles().elementAt(value.toInt()),
                                     style: style),
@@ -697,14 +698,15 @@ class _AdminPage2State extends StateMVC<AdminPage> with SingleTickerProviderStat
                 SizedBox(
                   height: 30,
                 ),
-                Text("데이터를 한 눈에!", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+                Text("데이터를 한 눈에!", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                SizedBox(height: 20,),
                 Padding(
-                  padding: const EdgeInsets.all(18.0),
+                  padding: const EdgeInsets.only(left: 21, right: 18),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-                        padding: const EdgeInsets.fromLTRB(28, 12, 28, 12),
+                        padding: const EdgeInsets.fromLTRB(22, 12, 19, 12),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10),
@@ -736,7 +738,7 @@ class _AdminPage2State extends StateMVC<AdminPage> with SingleTickerProviderStat
                       ),
                       Container(
                         // 좌, 위, 우, 아래
-                        padding: const EdgeInsets.fromLTRB(35, 12, 35, 12),
+                        padding: const EdgeInsets.fromLTRB(30, 12, 30, 12),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10),
@@ -772,15 +774,16 @@ class _AdminPage2State extends StateMVC<AdminPage> with SingleTickerProviderStat
                     ],
                   ),
                 ),
+                SizedBox(height: 10,),
                 Padding(
                   padding: const EdgeInsets.only(left: 240),
                   child: RichText(
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: "2024-06-14 10:33",
+                          text: formattedDate,
                           style: TextStyle(
-                              fontSize: 10,
+                              fontSize: 12,
                               fontWeight: FontWeight.bold,
                               color: Colors.black),
                         ),
@@ -798,14 +801,14 @@ class _AdminPage2State extends StateMVC<AdminPage> with SingleTickerProviderStat
                     onPressed: () {},
                     icon: Icon(Icons.keyboard_double_arrow_down_rounded),
                     color: Colors.lightBlueAccent,
-                    iconSize: 40,
+                    iconSize: 50,
                   ),
                 ),
                 Column(
                   children: [
                     ListTile(
                       title: Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
+                        padding: const EdgeInsets.only(left: 8, bottom: 10),
                         child: Text('미등록 유해사이트 신고',
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold)),
@@ -897,8 +900,8 @@ class _AdminPage2State extends StateMVC<AdminPage> with SingleTickerProviderStat
                     ],
                   ),
                 ),
-                trailing: Text(
-                  "2024/06/13",
+                trailing: Text(/////여기
+                  DateFormat('yyyy-MM-dd HH:mm').format(DateTime.parse(report[i][6])),
                   style: TextStyle(fontSize: 11, color: Colors.black),
                 ),
                 contentPadding:
