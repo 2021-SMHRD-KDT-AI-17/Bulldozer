@@ -276,10 +276,10 @@ class _ReportDetailPageState extends StateMVC<ReportDetailPage> {
                                       color: Colors.white,
                                     ),
                                     child: Text(
-                                      "불법 사이트입니다.",
+                                      "유해 사이트입니다.",
                                       // widget.report[4],
                                       textAlign: TextAlign.center,
-                                      // 이 부분 유해사이트라고 판단되면 "불법 사이트입니다.", 아니면 "합법 사이트입니다."
+                                      // 이 부분 유해사이트라고 판단되면 "유햐 사이트입니다.", 아니면 "비유해 사이트입니다."
                                       style: TextStyle(
                                         fontSize: 16, fontWeight: FontWeight.bold,
                                       ),

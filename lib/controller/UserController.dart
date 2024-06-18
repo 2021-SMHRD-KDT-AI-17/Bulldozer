@@ -63,7 +63,7 @@ class userController extends ControllerMVC {
 
   // 로그인
   Future<void> login(String email, String pw) async{
-    await DBConn('select u_email from tb_user where u_email="${email}" and u_pw="${pw}"');
+    await DBConn('select u_email, u_tel from tb_user where u_email="${email}" and u_pw="${pw}"');
   }
 
   // admin 제외 가져오기

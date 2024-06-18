@@ -4,6 +4,8 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <!--  브라우저 접근 권한  -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!--  SMS전송 권한  -->
+    <uses-permission android:name="android.permission.SEND_SMS"/>
     <application
         android:label="bulldozer"
         android:name="${applicationName}"

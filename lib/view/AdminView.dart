@@ -1,3 +1,4 @@
+import 'package:bulldozer/main.dart';
 import 'package:bulldozer/view/DictView.dart';
 import 'package:bulldozer/view/UrlListView.dart';
 import 'package:flutter/cupertino.dart';
@@ -413,6 +414,7 @@ class _AdminPage2State extends StateMVC<AdminPage> with SingleTickerProviderStat
                       fontWeight: FontWeight.bold, color: Colors.black87),
                 ),
                 onTap: () {
+                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => MyHomePage(),),(Route<dynamic>route)=>false);
                   // Exit 처리
                 },
               ),
@@ -502,7 +504,7 @@ class _AdminPage2State extends StateMVC<AdminPage> with SingleTickerProviderStat
                         Padding(
                           padding: const EdgeInsets.only(top: 30),
                           child: Text(
-                            "  불법 사이트 검출 현황",
+                            "  유해 사이트 검출 현황",
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),

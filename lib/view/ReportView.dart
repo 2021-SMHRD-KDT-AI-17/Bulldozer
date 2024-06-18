@@ -1,3 +1,4 @@
+import 'package:bulldozer/view/ReportComPage.dart';
 import 'package:flutter/material.dart';
 import '../../controller/ReportController.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
@@ -133,10 +134,9 @@ class _ReportPageState extends StateMVC<ReportPage> {
                     const SizedBox(height: 30),
                     ElevatedButton(
                       onPressed: () {
-
                         //신고하기
                         _insertReport(widget.userE, addCon.text, descriptCon.text);
-
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => ReportComPage(),),(Route<dynamic>route)=>false);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.deepOrangeAccent, // 버튼 배경 색상 설정

@@ -64,7 +64,7 @@ class _ReportCheckPageState extends StateMVC<ReportCheckPage> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           title: Padding(
-            padding: const EdgeInsets.only(left: 110),
+            padding: const EdgeInsets.only(left: 62),
             child: Text(
               '신고/건의 게시판',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),

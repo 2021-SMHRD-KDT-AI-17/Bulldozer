@@ -1,12 +1,18 @@
+import 'package:bulldozer/controller/BlockHisController.dart';
+import 'package:bulldozer/smsService.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../controller/WebController.dart';
-import 'package:bulldozer/db.dart';
 
 class verifi{
   static final verifi _instance = verifi._internal();
+  late final String email;
+  late final String phone;
+  final blockHisController bhc=blockHisController();
+  final smsService sms = smsService();
   static Future<void>? _initFuture;
   verifi._internal();
   late final String ngrokDomain;
@@ -21,6 +27,7 @@ class verifi{
   static Future<verifi> getInstance() async {
     if (_initFuture == null) {
       _initFuture = _domainInit();
+
     }
     await _initFuture;
     return _instance;
@@ -28,6 +35,9 @@ class verifi{
   static Future<void> _domainInit() async {
     _instance.webCon = webController();
     _instance.ngrokDomain= await _instance.webCon.domainGet();
+    final storage = FlutterSecureStorage();
+    _instance.email = (await storage.read(key: 'loginM'))!;
+    _instance.phone = (await storage.read(key: 'loginT'))!;
     print(_instance.ngrokDomain);
   }
   static Future<String> _fetchDomain() async {
@@ -82,8 +92,7 @@ class verifi{
       if (url.contains(bUrl)) {
         print("차단 리스트에 포함된 URL");
         await platform.invokeMethod('launchBulldozer');  // isOk가 true일 때 메세지 전송
-        await Future.delayed(Duration(milliseconds: 990));
-        Fluttertoast.showToast(msg: "${url} > 유해사이트로 판단 되었습니다",toastLength: Toast.LENGTH_LONG);
+        detection(url);
         return true;
       }
     }
@@ -110,8 +119,7 @@ class verifi{
         if(isHarmWeb==true){
           print("URL이 유해사이트로 판별됬습니다.");
           await platform.invokeMethod('launchBulldozer'); // 코틀린쪽
-          await Future.delayed(Duration(milliseconds: 950));
-          Fluttertoast.showToast(msg: "${url} > 유해사이트로 판단 되었습니다",toastLength: Toast.LENGTH_LONG);
+          detection(url);
         }
       } else {
         print("Failed to load data. Status code: ${response.statusCode}");
@@ -121,5 +129,13 @@ class verifi{
     }
     return isHarmWeb;
   }
-
+  Future<void> detection(url) async{
+    await Future.delayed(Duration(milliseconds: 990));
+    Fluttertoast.showToast(msg: "${url} > 유해사이트로 판단 되었습니다",toastLength: Toast.LENGTH_LONG);
+    print(_instance.email);
+    print(url);
+    bhc.insertBlock(_instance.email,url);
+    sms.sendWebinfo(_instance.phone,url);
+  }
 }
+

@@ -46,6 +46,10 @@ class blockHisController extends ControllerMVC {
   }
 
   // 차단횟수 확인
+  Future<void> insertBlock(String email, String address) async{
+    await DBConn('insert into tb_block_his(u_email, block_address) values("${email}", "${address}");');
+  }
+  // 차단횟수 확인
   Future<void> getBlockAt(String email, String address) async{
     await DBConn('SELECT u_email, block_address, block_at FROM tb_block_his '
         'WHERE u_email = "${email}" AND block_address LIKE "%${address}%" order by block_at DESC;');

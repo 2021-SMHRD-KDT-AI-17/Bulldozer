@@ -30,7 +30,7 @@ class RadialProgressPainter extends CustomPainter {
       -3.141592653589793 / 2,
       angle,
       false,
-      paint..strokeWidth = 20..style = PaintingStyle.stroke,
+      paint..strokeWidth = 5..style = PaintingStyle.stroke,
     );
   }
 

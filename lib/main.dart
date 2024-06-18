@@ -1,24 +1,19 @@
 import 'package:fluttertoast/fluttertoast.dart';
-
-import '../../view/JoinView.dart';
+import 'package:telephony/telephony.dart';
 import '../../view/UserMain.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:mysql_client/mysql_client.dart';
 import '../../controller/UserController.dart';
-import '../../model/UserModel.dart';
 import '../../view/AdminView.dart';
-import '../../view/DictView.dart';
 import '../../view/JoinView.dart';
-import '../../view/UrlListView.dart';
-import '../../view/UserListView.dart';
 import 'package:bulldozer/db.dart';
-import 'package:mvc_pattern/mvc_pattern.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  Telephony telephony = Telephony.instance;
+  await telephony.requestPhoneAndSmsPermissions;
   runApp(const MyApp());
 }
 
@@ -30,6 +25,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        fontFamily: "Pretendard",
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
         useMaterial3: true,
       ),
@@ -431,9 +427,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
     if(res[0][0] != 'admin'){
       // 로그인 성공
-      print('로그인 성공');
       await storage.write(key: 'loginM', value: '${email}');
-      print('${email}');
+      await storage.write(key: 'loginT', value: '${res[0][1]}');
+      print('로그인 성공 : ${email}');
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => UserMain(),),(Route<dynamic>route)=>false);
     } else if (res[0][0] == 'admin') {
       print('관리자');

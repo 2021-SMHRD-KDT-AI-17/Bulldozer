@@ -35,9 +35,9 @@ class _AnimatedToggleState extends State<AnimatedToggle> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Container(
-      width: width * 0.7,
-      height: width * 0.13,
-      margin: EdgeInsets.all(20),
+      width: width * 0.6,
+      height: width * 0.11,
+      margin: EdgeInsets.fromLTRB(2, 4, 2, 4),
       child: Stack(
         children: <Widget>[
           GestureDetector(
@@ -49,7 +49,7 @@ class _AnimatedToggleState extends State<AnimatedToggle> {
             },
             child: Container(
               width: width * 0.7,
-              height: width * 0.13,
+              height: width * 0.12,
               decoration: ShapeDecoration(
                 color: widget.backgroundColor,
                 shape: RoundedRectangleBorder(
@@ -82,7 +82,7 @@ class _AnimatedToggleState extends State<AnimatedToggle> {
             initialPosition ? Alignment.centerLeft : Alignment.centerRight,
             child: Container(
               width: width * 0.35,
-              height: width * 0.13,
+              height: width * 0.12,
               decoration: ShapeDecoration(
                 color: widget.buttonColor,
                 shadows: widget.shadows,
