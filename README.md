@@ -42,13 +42,13 @@
     <tr>
         <td>Front-end/Back-end</td>
         <td>
-            <img src="https://img.shields.io/badge/flutter-#02569B?style=for-the-badge&logo=flutter&logoColor=white"/>
+            <img src="https://img.shields.io/badge/Flutter-02569B?style=flat-square&logo=flutter&logoColor=white"/>
         </td>
     </tr>
     <tr>
         <td>IDE</td>
         <td>
-          <img src="https://img.shields.io/badge/androidstudio-#3DDC84?style=for-the-badge&logo=androidstudio&logoColor=white"/>
+          <img src="https://img.shields.io/badge/Android Studio-3DDC84?style=flat-square&logo=Android Studio&logoColor=white"/>
           <img src="https://img.shields.io/badge/VSCode-007ACC?style=for-the-badge&logo=VisualStudioCode&logoColor=white"/>
           <img src="https://img.shields.io/badge/Jupyter-F37626?style=for-the-badge&logo=Jupyter&logoColor=white"/>
         </td>
@@ -86,7 +86,7 @@
         <td>
             <img src="https://img.shields.io/badge/openai-#412991?style=for-the-badge&logo=openai&logoColor=black">
             <img src="https://img.shields.io/badge/naver-#03C75A?style=for-the-badge&logo=Naver Open Api&logoColor=white">
-            <img src="https://img.shields.io/badge/firebase-#DD2C00?style=for-the-badge&logo=firebase&logoColor=white"/>
+            <img src="https://img.shields.io/badge/Firebase-FFCA28?style=flat-square&logo=firebase&logoColor=black"/>
             <img src="https://img.shields.io/badge/google-#4285F4?style=for-the-badge&logo=Google Vision&logoColor=white"/> 
         </td>
     </tr>
