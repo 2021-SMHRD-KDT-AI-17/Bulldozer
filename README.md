@@ -39,13 +39,13 @@
     <tr>
         <td>Front-end/Back-end</td>
         <td>
-            <img src="https://img.shields.io/badge/Flutter-02569B?style=flat-square&logo=flutter&logoColor=white"/>
+            <img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white"/>
         </td>
     </tr>
     <tr>
         <td>IDE</td>
         <td>
-          <img src="https://img.shields.io/badge/Android Studio-3DDC84?style=flat-square&logo=Android Studio&logoColor=white"/>
+          <img src="https://img.shields.io/badge/Android Studio-3DDC84?style=for-the-badge&logo=Android Studio&logoColor=white"/>
           <img src="https://img.shields.io/badge/VSCode-007ACC?style=for-the-badge&logo=VisualStudioCode&logoColor=white"/>
           <img src="https://img.shields.io/badge/Jupyter-F37626?style=for-the-badge&logo=Jupyter&logoColor=white"/>
         </td>
@@ -83,7 +83,7 @@
         <td>
             <img src="https://img.shields.io/badge/openai-412991?style=for-the-badge&logo=openai&logoColor=black">
             <img src="https://img.shields.io/badge/Naver Open API-03C75A?style=for-the-badge&logo=Naver Open API&logoColor=white">
-            <img src="https://img.shields.io/badge/Firebase-FFCA28?style=flat-square&logo=firebase&logoColor=black"/>
+            <img src="https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black"/>
             <img src="https://img.shields.io/badge/Google Vision-4285F4?style=for-the-badge&logo=Google Vision&logoColor=white"/> 
         </td>
     </tr>
@@ -187,19 +187,20 @@
 <br>
 
 ## 🥊 트러블슈팅
-### 문제 1
-![트러블슈팅1](https://github.com/2021-SMHRD-KDT-AI-17/ShareByuS/assets/157354010/1ec48f2d-38a0-4b14-a6aa-e63414a025c2)
+![실전프로젝트-발표-030](https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/0d51b4be-186b-44fc-8ea3-b7bae52ed449)
 <br>
 <br>
 
 
 ## 👨‍👩‍👧‍👦 팀원역할
-![팀원소개](https://github.com/2021-SMHRD-KDT-AI-17/ShareByuS/assets/157354010/15f732f8-9c9b-4113-8a45-41d8eae7715a)
+![002](https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/0658efe3-2b98-41af-a99f-e67fddb251f8)
+
 
 <br>
 <br>
 
 ## 📚 참고문헌 및 출처
-![참고문헌및출처](https://github.com/2021-SMHRD-KDT-AI-17/ShareByuS/assets/157354010/244f37f5-ef3f-437d-a2cc-d063c377331e)
+![001](https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/95c3fadb-a080-4d9e-8c9f-af3a81e76028)
+
 
 
