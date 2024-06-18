@@ -82,9 +82,9 @@
         <td>Library</td>
         <td>
             <img src="https://img.shields.io/badge/openai-412991?style=for-the-badge&logo=openai&logoColor=black">
-            <img src="https://img.shields.io/badge/naver-03C75A?style=for-the-badge&logo=Naver Open Api&logoColor=white">
+            <img src="https://img.shields.io/badge/Naver Open API-03C75A?style=for-the-badge&logo=Naver Open API&logoColor=white">
             <img src="https://img.shields.io/badge/Firebase-FFCA28?style=flat-square&logo=firebase&logoColor=black"/>
-            <img src="https://img.shields.io/badge/google-4285F4?style=for-the-badge&logo=Google Vision&logoColor=white"/> 
+            <img src="https://img.shields.io/badge/Google Vision-4285F4?style=for-the-badge&logo=Google Vision&logoColor=white"/> 
         </td>
     </tr>
 </table>
