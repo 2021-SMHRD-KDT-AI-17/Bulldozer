@@ -35,25 +35,20 @@
         <td>Language</td>
         <td>
             <img src="https://img.shields.io/badge/Kotlin-7F52FF?style=for-the-badge&logo=Kotlin&logoColor=white"/>
-            <img src="https://img.shields.io/badge/Dart-#0175C2?style=for-the-badge&logo=Dart&logoColor=white"/>
+            <img src="https://img.shields.io/badge/dart-#0175C2?style=for-the-badge&logo=dart&logoColor=white"/>
             <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white"/> 
         </td>
     </tr>
     <tr>
         <td>Front-end/Back-end</td>
         <td>
-            <img src="https://img.shields.io/badge/Flutter-#02569B?style=for-the-badge&logo=Flutter&logoColor=white"/>
+            <img src="https://img.shields.io/badge/flutter-#02569B?style=for-the-badge&logo=flutter&logoColor=white"/>
         </td>
     </tr>
     <tr>
-        <td>Back-end 프레임워크</td>
-        <td>
-           <img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=Spring&logoColor=white"/> 
-    </tr> 
-    <tr>
         <td>IDE</td>
         <td>
-          <img src="https://img.shields.io/badge/AndroidStudio-#3DDC84?style=for-the-badge&logo=AndroidStudio&logoColor=white"/>
+          <img src="https://img.shields.io/badge/androidstudio-#3DDC84?style=for-the-badge&logo=androidstudio&logoColor=white"/>
           <img src="https://img.shields.io/badge/VSCode-007ACC?style=for-the-badge&logo=VisualStudioCode&logoColor=white"/>
           <img src="https://img.shields.io/badge/Jupyter-F37626?style=for-the-badge&logo=Jupyter&logoColor=white"/>
         </td>
@@ -75,7 +70,7 @@
          <td>Model</td>
          <td>
              <img src="https://img.shields.io/badge/EasyOCR-#0099B0?style=for-the-badge&logo=EasyOCR&logoColor=white"/>
-             <img src="https://img.shields.io/badge/OpenCV-#5C3EE8?style=for-the-badge&logo=OpenCV&logoColor=white"/> 
+             <img src="https://img.shields.io/badge/opencv-#5C3EE8?style=for-the-badge&logo=opencv&logoColor=white"/> 
          </td>
     </tr>
     <tr>
@@ -89,10 +84,10 @@
       <tr>
         <td>Library</td>
         <td>
-            <img src="https://img.shields.io/badge/Open AI-#412991?style=for-the-badge&logo=Oepn AI&logoColor=black">
-            <img src="https://img.shields.io/badge/Naver Open Api-#03C75A?style=for-the-badge&logo=Naver Open Api&logoColor=white">
-            <img src="https://img.shields.io/badge/Firebase-#DD2C00?style=for-the-badge&logo=Firebase&logoColor=white"/>
-            <img src="https://img.shields.io/badge/Google Vision-#4285F4?style=for-the-badge&logo=Google Vision&logoColor=white"/> 
+            <img src="https://img.shields.io/badge/openai-#412991?style=for-the-badge&logo=openai&logoColor=black">
+            <img src="https://img.shields.io/badge/naver-#03C75A?style=for-the-badge&logo=Naver Open Api&logoColor=white">
+            <img src="https://img.shields.io/badge/firebase-#DD2C00?style=for-the-badge&logo=firebase&logoColor=white"/>
+            <img src="https://img.shields.io/badge/google-#4285F4?style=for-the-badge&logo=Google Vision&logoColor=white"/> 
         </td>
     </tr>
 </table>
