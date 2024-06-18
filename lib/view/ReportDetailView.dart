@@ -21,9 +21,6 @@ class _ReportDetailPageState extends StateMVC<ReportDetailPage> {
 
   Future<void> _deleteReport(String email, int index) async {
     await ReportController.deleteReport(email, index);
-    widget.reloadReports();
-    Navigator.pop(context, true);
-    Navigator.pop(context, true);
   }
 
   void _showAnalysisResultDialog(BuildContext context) {
@@ -53,6 +50,9 @@ class _ReportDetailPageState extends StateMVC<ReportDetailPage> {
             TextButton(
               onPressed: () {
                 _deleteReport(widget.report[1], int.parse(widget.report[0]));
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+                widget.reloadReports();
               },
               child: Text(
                 '예',
@@ -312,6 +312,7 @@ class _ReportDetailPageState extends StateMVC<ReportDetailPage> {
                                   TextButton(
                                     onPressed: () {
                                       _deleteReport(widget.report[1], int.parse(widget.report[0]));
+                                      Navigator.of(context).pop();
                                     },
                                     child: Text('삭제하기',
                                         style: TextStyle(color: Colors.red[900], fontWeight: FontWeight.bold, fontSize: 16)),

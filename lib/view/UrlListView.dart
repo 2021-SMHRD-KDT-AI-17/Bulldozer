@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import '../../controller/WebController.dart';
 import '../../controller/BlockHisController.dart';
 import '../db.dart';
 import 'package:pdf/pdf.dart';
@@ -45,9 +44,9 @@ class _HarmSiteListState extends StateMVC<HarmSiteList> {
   void countAdd() {
     countList.clear();
     for (int i = 0; i < res.length; i++) {
-      String email = res[i][1];
-      String site = res[i][2] != null ? res[i][2].split('/')[0] : ''; // null 체크 추가
-      String at = res[i][3];
+      String email = res[i][1] ?? 'unknown';
+      String site = res[i][2]?.split('/')[0] ?? 'unknown'; // null 체크 추가
+      String at = res[i][3] ?? 'unknown';
 
       // 사이트를 리스트에서 찾기
       bool found = false;
@@ -81,7 +80,6 @@ class _HarmSiteListState extends StateMVC<HarmSiteList> {
     }
 
     print(countList);
-    //setState(() { });
   }
 
   List<List> urlAt = [];
@@ -147,7 +145,6 @@ class _HarmSiteListState extends StateMVC<HarmSiteList> {
 
   @override
   Widget build(BuildContext context) {
-    countAdd();
     return Scaffold(
       appBar: AppBar(
         title: Padding(
@@ -169,7 +166,7 @@ class _HarmSiteListState extends StateMVC<HarmSiteList> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 40, top: 20),
+                      padding: const EdgeInsets.only(left: 58, top: 20),
                       child: Image.asset(
                         "images/free-icon-warning-sign-3076336.png", // 이미지 경로 설정
                         width: 120,
@@ -192,12 +189,12 @@ class _HarmSiteListState extends StateMVC<HarmSiteList> {
                 SizedBox(height: 10,),
                 Spacer(), // 왼쪽과 오른쪽 공간을 나눔
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: 5,),
                     Container(
                       height: 40,
-                      width: 160,
+                      width: 180,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.amber[100],
@@ -212,10 +209,10 @@ class _HarmSiteListState extends StateMVC<HarmSiteList> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 5,),
+                    SizedBox(height: 10,),
                     Container(
                       height: 40,
-                      width: 160,
+                      width: 180,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.amber[200],

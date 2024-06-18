@@ -1,5 +1,4 @@
 import 'package:bulldozer/login/firebase_service.dart';
-import 'package:bulldozer/main.dart';
 import 'package:bulldozer/controller/UserController.dart';
 import 'package:bulldozer/view/JoinComPage.dart';
 import 'package:flutter/material.dart';
@@ -91,7 +90,7 @@ class _JoinPageState extends State<JoinPage> with TickerProviderStateMixin {
             fireSer.getinfo(_emailController.text, _passwordController.text);
             bool res=await fireSer.checkAndJoin(context);
             if(res==true){
-              uc.insertM(_emailController.text, _passwordController.text,_phoneController.text);
+              uc.insertM(_emailController.text, _passwordController.text,_selectedAreaCode+_phoneController.text);
               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => JoinComPage(userEmail:_emailController.text),),(Route<dynamic>route)=>false);
             }
           }

@@ -65,14 +65,14 @@ class _UserListState extends StateMVC<UserList> with SingleTickerProviderStateMi
     // 사용자 차단 이력과 사용자 정보를 비교하여 화면에 표시할 데이터 구성
     for (List<dynamic> userData in user) {
       bool foundConHis = false;
-      String email = userData[0];
+      String email = userData[0] ?? "";
       String start = "-";
       String end = "-";
       int blockCount = 0;
 
       for (List<dynamic> userConHisData in userConHis) {
         if (email == userConHisData[0]) {
-          start = userConHisData[2];
+          start = userConHisData[2] ?? "-";
           end = userConHisData[3] ?? "-";
           foundConHis = true;
           break;
@@ -81,7 +81,7 @@ class _UserListState extends StateMVC<UserList> with SingleTickerProviderStateMi
 
       for (List<dynamic> blockData in blockCnt) {
         if (email == blockData[0]) {
-          blockCount = int.parse(blockData[1]);
+          blockCount = int.parse(blockData[1] ?? "0");
           break;
         }
       }
@@ -97,7 +97,7 @@ class _UserListState extends StateMVC<UserList> with SingleTickerProviderStateMi
     // user 테이블에 없는 이메일들 추가
     for (List<dynamic> blockData in blockCnt) {
       bool found = false;
-      String email = blockData[0];
+      String email = blockData[0] ?? "";
       for (List<dynamic> userData in user) {
         if (email == userData[0]) {
           found = true;
@@ -109,7 +109,7 @@ class _UserListState extends StateMVC<UserList> with SingleTickerProviderStateMi
           [email],
           "-", // 차단 시작 시간
           "-", // 차단 종료 시간
-          int.parse(blockData[1]) > 0 ? blockData[1].toString() : "-" // 차단 횟수
+          int.parse(blockData[1] ?? "0") > 0 ? blockData[1].toString() : "-" // 차단 횟수
         ]);
       }
     }
@@ -187,7 +187,7 @@ class _UserListState extends StateMVC<UserList> with SingleTickerProviderStateMi
               Padding(
                 padding: const EdgeInsets.only(left: 8),
                 child: Text(
-                  "차단 시작                          $start",
+                  "차단 시작                     $start",
                   style: const TextStyle(
                     fontSize: 12,
                     color: Colors.black,
@@ -198,7 +198,7 @@ class _UserListState extends StateMVC<UserList> with SingleTickerProviderStateMi
               Padding(
                 padding: const EdgeInsets.only(left: 8),
                 child: Text(
-                  "차단 종료                          $end",
+                  "차단 종료                     $end",
                   style: const TextStyle(
                     fontSize: 12,
                     color: Colors.black,
@@ -206,10 +206,11 @@ class _UserListState extends StateMVC<UserList> with SingleTickerProviderStateMi
                   ),
                 ),
               ),
+              SizedBox(height: 10,),
               Padding(
                 padding: const EdgeInsets.only(left: 8),
                 child: Text(
-                  "유해 URL 접속 횟수          ${withTCData[3]}",
+                  "유해 URL 접속 횟수                       ${withTCData[3]}",
                   style: const TextStyle(
                     fontSize: 12,
                     color: Colors.black,
@@ -367,11 +368,11 @@ class _UserListState extends StateMVC<UserList> with SingleTickerProviderStateMi
                   alignment: Alignment.center,
                   children: [
                     Positioned(
-                      left: 40,
+                      left: 19,
                       child: Text(
-                        "현재 가입 회원 수는 ",
+                        " 현재 가입 회원 수는 ",
                         style: const TextStyle(
-                          fontSize: 16,
+                          fontSize: 15,
                           color: Colors.black87,
                           fontWeight: FontWeight.bold,
                         ),
@@ -379,7 +380,7 @@ class _UserListState extends StateMVC<UserList> with SingleTickerProviderStateMi
                       ),
                     ),
                     Positioned(
-                      right: 20,
+                      right: 15,
                       child: Row(
                         children: [
                           Container(
@@ -389,7 +390,7 @@ class _UserListState extends StateMVC<UserList> with SingleTickerProviderStateMi
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Container(
-                              width: 100,
+                              width: 116,
                               child: Text(
                                 "${withTC.length}명",
                                 style: const TextStyle(
@@ -405,7 +406,7 @@ class _UserListState extends StateMVC<UserList> with SingleTickerProviderStateMi
                           Text(
                             " 입니다.",
                             style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 15,
                               color: Colors.black87,
                               fontWeight: FontWeight.bold,
                             ),
@@ -420,13 +421,13 @@ class _UserListState extends StateMVC<UserList> with SingleTickerProviderStateMi
 
             const SizedBox(height: 20),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Row(
                 children: [
                   Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(right: 90, bottom: 8),
+                        padding: const EdgeInsets.only(right: 86, bottom: 8),
                         child: Text("이용자 현황", style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),
                         ),
                       ),
@@ -474,7 +475,7 @@ class _UserListState extends StateMVC<UserList> with SingleTickerProviderStateMi
                           ],
                         ),
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 12),
                       Container(
                         width: 170,
                         decoration: BoxDecoration(
@@ -520,7 +521,7 @@ class _UserListState extends StateMVC<UserList> with SingleTickerProviderStateMi
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        "             * ${DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now())} 기준",
+                        "      * ${DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now())} 기준",
                         style: TextStyle(
                           color: Colors.blueGrey,
                           fontSize: 11,
@@ -532,13 +533,13 @@ class _UserListState extends StateMVC<UserList> with SingleTickerProviderStateMi
 
                     ],
                   ),
-                  const SizedBox(width: 20),
+                  const SizedBox(width: 7),
                   Container(
-                    width: 1,
-                    height: 166,
+                    width: 2,
+                    height: 182,
                     color: Colors.amber[900], // 중앙 선 추가
                   ),
-                  const SizedBox(width: 20),
+                  const SizedBox(width: 17),
                   Expanded(
                     child: AspectRatio(
                       aspectRatio: 1.0,
@@ -549,9 +550,9 @@ class _UserListState extends StateMVC<UserList> with SingleTickerProviderStateMi
                               color: Colors.blue[300],
                               value: activePercentage.isNaN ? 0 : activePercentage,
                               title: '${activePercentage.toStringAsFixed(1)}%',
-                              radius: 38,
+                              radius: 48,
                               titleStyle: TextStyle(
-                                fontSize: 16,
+                                fontSize: 11,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
                               ),
@@ -560,9 +561,9 @@ class _UserListState extends StateMVC<UserList> with SingleTickerProviderStateMi
                               color: Colors.red[300],
                               value: inactivePercentage.isNaN ? 0 : inactivePercentage,
                               title: '${inactivePercentage.toStringAsFixed(1)}%',
-                              radius: 38,
+                              radius: 48,
                               titleStyle: TextStyle(
-                                fontSize: 16,
+                                fontSize: 11,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
                               ),
@@ -716,7 +717,7 @@ class _UserDetailState extends StateMVC<UserDetail> {
             "${withTCData[0][0]}",
             style: const TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 14,
+              fontSize: 10,
               color: Colors.black,
               overflow: TextOverflow.ellipsis,
             ),

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bulldozer/main.dart';
 import 'package:bulldozer/view/UrlListView.dart';
 import 'package:flutter/material.dart';
 import '../../db.dart';
@@ -454,7 +455,7 @@ class _DictionaryPageState extends StateMVC<DictionaryPage> with SingleTickerPro
                       fontWeight: FontWeight.bold, color: Colors.black87),
                 ),
                 onTap: () {
-                  // Exit 처리
+                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => MyHomePage(),),(Route<dynamic>route)=>false);
                 },
               ),
             ),

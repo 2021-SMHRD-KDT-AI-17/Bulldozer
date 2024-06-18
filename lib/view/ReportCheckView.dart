@@ -1,3 +1,4 @@
+import 'package:bulldozer/main.dart';
 import 'package:bulldozer/view/AdminView.dart';
 import 'package:bulldozer/view/DictView.dart';
 import 'package:bulldozer/view/UrlListView.dart';
@@ -37,7 +38,7 @@ class _ReportCheckPageState extends StateMVC<ReportCheckPage> {
     _loadData();
   }
 
-  Future<void> _loadData() async {//여기 유의
+  Future<void> _loadData() async {
     await ReportController.loadData();
     setState(() {
       reports = List<List<dynamic>>.from(ReportController.reports.map((report) => [
@@ -256,7 +257,7 @@ class _ReportCheckPageState extends StateMVC<ReportCheckPage> {
                         fontWeight: FontWeight.bold, color: Colors.black87),
                   ),
                   onTap: () {
-                    // Exit 처리
+                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => MyHomePage(),),(Route<dynamic>route)=>false);
                   },
                 ),
               ),

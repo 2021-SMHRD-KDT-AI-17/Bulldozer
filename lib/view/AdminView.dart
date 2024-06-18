@@ -1,7 +1,6 @@
 import 'package:bulldozer/main.dart';
 import 'package:bulldozer/view/DictView.dart';
 import 'package:bulldozer/view/UrlListView.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import '../../controller/ReportController.dart';
@@ -13,8 +12,6 @@ import 'package:intl/intl.dart';
 import '../../controller/BlockHisController.dart';
 import '../db.dart';
 import 'package:flutter/painting.dart' as flutterPainting;
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 
 const Color bottomNavBgColor = Color(0xFF17203A);
 

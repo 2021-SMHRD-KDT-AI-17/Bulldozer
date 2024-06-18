@@ -21,7 +21,7 @@ class verifi{
   // static bool isNavigatingBack = false; // 페이지가 뒤로갈 때 해당 웹(비유해)은 검사하지 않도록 추가
   static const platform = MethodChannel('com.example.bulldozer/browser');
   static List<String> whiteList=["naver.com", "series.naver.com", "serieson.naver.com", "sports.naver.com", "entertain.naver.com", "pay.naver.com", "stock.naver.com", "land.naver.com", "novel.naver.com", "comic.naver.com", "chzzk.naver.com", "mail.naver.com", "calendar.naver.com", "memo.naver.com", "contact.naver.com", "photo.mybox.naver.com", "blog.naver.com", "bboom.naver.com", "cafe.naver.com", "post.naver.com", "booking.naver.com", "flight.naver.com", "place.naver.com", "map.naver.com", "terms.naver.com", "kin.naver.com", "searchad.naver.com", "daum.net", "mail.daum.net", "cafe.daum.net", "finance.daum.net", "realty.daum.net", "shoppinghow.kakao.com", "map.kakao.com", "google.com"];
-  static List<String> blackList=["cms-2345.com", "rb-000.com", "smtb-0372.com", "ww-ot.com", "zzz-82.com", "wbet.biz", "gob-001.com", "snc-rr.com", "fst-ccc.com", "www.xn--tl3bze78kh9hq9a.com", "mcl-ddff.com", "xn--1-v78es76b.com", "ct-010.com"];
+  static List<String> blackList=["cms-2345.com", "rb-000.com", "smtb-0372.com", "ww-ot.com", "zzz-82.com", "wbet.biz", "gob-001.com", "snc-rr.com", "fst-ccc.com", "www.xn--tl3bze78kh9hq9a.com", "mcl-ddff.com", "xn--1-v78es76b.com", "ct-010.com", "tfrastrategy.com","rs9best.net","business2community.com"];
 
   static Future<verifi> getInstance() async {
     if (_initFuture == null) {
@@ -123,6 +123,11 @@ class verifi{
           print("URL이 유해사이트로 판별됬습니다.");
           await platform.invokeMethod('launchBulldozer'); // 코틀린쪽
           detection(url);
+        }else{
+          for (String wUrl in whiteList) {
+            if (url.contains(wUrl))return false;
+          }
+          whiteList.add(url);
         }
       } else {
         print("Failed to load data. Status code: ${response.statusCode}");
@@ -134,9 +139,12 @@ class verifi{
   }
   Future<void> detection(url) async{
     await Future.delayed(Duration(milliseconds: 990));
-    blackList.add(url);
     bhc.insertBlock(_instance.email,url);
     sms.sendWebinfo(_instance.phone,url);
+    for (String bUrl in blackList){
+      if (url.contains(bUrl))return;
+    }
+    blackList.add(url);
   }
 }
 
