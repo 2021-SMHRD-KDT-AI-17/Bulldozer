@@ -1,9 +1,10 @@
 # 🚧Bulldozer
-## OCR을 활용한 청소년 전용 도박 사이트 차단 앱 서비스 [팀명 : 불도저(불법도박저지)]
 <br>
 
 ## 🚦 서비스 소개
-* 수정중
+### OCR을 활용한 청소년 전용 도박 사이트 차단 앱 서비스 [팀명 : 불도저(불법도박저지)]
+--여기뭐라고쓸지좀고민--
+
 <br>
 
 ## 🗓 프로젝트 기간
@@ -11,11 +12,11 @@
 <br>
 <br>
 ## 🛠 주요기능
-### 이용자
+### 📱 이용자
 * 백그라운드 앱 실행으로 브라우저 이용 시, 도박사이트 차단
 * 미등록 유해 사이트 신고 기능
 * 앱 기능 on/off 시 or 유해사이트 판별 시 보호자에게 문자 알림 기능
-### 관리자
+### ⚙ 관리자
 * 이용자 관리(이용자 목록, 선택 시 차단 횟수와 URL) 
 * URL 관리(URL 목록들과 차단 횟수 및 최초 등록날짜)
 * 유해 사이트 단어사전 열람 및 단어 추가 기능
@@ -114,36 +115,78 @@
 
 <br>
 
-## 💡 화면구성
+## 🎲 ER 다이어그램
+![ER 다이어그램](https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/2601d79a-15bc-479a-914b-e72952b2082a)
+
+
+
+<br>
+
+## 💻 화면구성
 <br>
 <br>
 
-### 🖥 이용자 화면
+### 📱 시작 화면
+<br>
+* 로그인 화면
+<img src="https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/6320963f-7e8a-454e-b482-dac9d35f4ae8" height="666" width="324"/>
+
+<br>
+* 회원가입 화면
+<img src="https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/39045b15-ee2b-4df1-8112-47096371fbe7" height="666" width="324"/>
+
+<br>
+
+
+### 📱 이용자 화면
 <br>
 
 * 이용자 메인화면(백그라운드 앱 실행 off/on)
-<img src="https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/fb249e0f-ba3e-45a2-8e75-e81f421ab98f" height="640" width="360"/>
-<img src="https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/9dbdec00-1882-4e54-a409-2b172dfdd4b8" height="640" width="360"/>
+<img src="https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/fb249e0f-ba3e-45a2-8e75-e81f421ab98f" height="666" width="324"/>
+<img src="https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/9dbdec00-1882-4e54-a409-2b172dfdd4b8" height="666" width="324"/>
+
+<br>
+* 불법 도박사이트 접근 시
+<img src="https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/9a05bcd2-b972-4631-b16e-b26711d4a650" height="666" width="324"/>
+<img src="https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/d32f2618-f924-4126-b699-49fa99ac1627" height="668" width="239"/>
+
+
 
 <br>
 
 ------------------------------------------------------------------------------------------
 <br>
 
-### 🖥 관리자 화면
+### 📱 관리자 화면
 <br>
 
 * 관리자 메인 화면
-<img src="https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/df5b5d75-a058-4df6-95f9-2f709e2d29ad" height="640", width="360"/>
+<img src="https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/df5b5d75-a058-4df6-95f9-2f709e2d29ad" height="666" width="324"/>
+
+<br>
+* 관리자 기능 이동 탭
+<img src="https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/65bb4cc4-dc32-4185-ac77-cbd063d97f1a" height="666" width="324"/>
+
+<br>
+#### 회원 목록
+<img src="https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/844abbeb-bb01-4073-a7ff-5fe197c7320c" height="666" width="324"/>
+
+<br>
+#### 유해사이트 목록
+<img src="https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/b919dc1c-7d66-4839-aba0-4c4383d4e96f" height="666" width="324"/>
+
+<br>
+#### 단어사전
+<img src="https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/3d39acf1-cef2-4acf-ac97-d2391770164a" height="666" width="324"/>
+<img src="https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/31202eff-6746-4dcb-9e68-35ad26ae3acf" height="666" width="324"/>
 
 <br>
 
-#### 🖱 공구함 게시글 상세
 
-
+------------------------------------------------------------------------------------------
 <br>
 
-#### 🖱 공구함 게시글 수정
+### 📱 신고 화면
 
 
 <br>
@@ -151,28 +194,6 @@
 #### 🖱 게시글 내 참여하기 - 채팅방
 
 
-<br>
-------------------------------------------------------------------------------------------
-
-<br>
-
-### 🖥 우리동네 게시판 화면
-<br>
-<br>
-
-
-<br>
-
-
-  
-
-<br>
-
-------------------------------------------------------------------------------------------
-<br>
-
-### 🖥 POP - 검색하기 화면
-<br>
 <br>
 
 
