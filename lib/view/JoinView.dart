@@ -140,7 +140,7 @@ class _JoinPageState extends State<JoinPage> with TickerProviderStateMixin {
   void _startCountdown() {
     setState(() {
       _isButtonDisabled = true;
-      _buttonText = "T : ";
+      _buttonText = "";
     });
 
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -180,11 +180,11 @@ class _JoinPageState extends State<JoinPage> with TickerProviderStateMixin {
               Padding(
                 padding: const EdgeInsets.only(top: 12.0),
                 child: CircleAvatar(
-                  radius: 16,
+                  radius: 21,
                   backgroundColor: Colors.deepOrangeAccent,
                   child: Text(
                     number,
-                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                    style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: Colors.white),
                   ),
                 ),
               ),
@@ -292,7 +292,7 @@ class _JoinPageState extends State<JoinPage> with TickerProviderStateMixin {
             ),
           if (showValidationError)
             const Padding(
-              padding: EdgeInsets.only(left: 180.0, top: 10),
+              padding: EdgeInsets.only(left: 160.0, top: 16),
               child: Text(
                 '* 정보를 입력해주세요!',
                 style: TextStyle(color: Colors.pink, fontSize: 16, fontWeight: FontWeight.bold),
@@ -336,17 +336,18 @@ class _JoinPageState extends State<JoinPage> with TickerProviderStateMixin {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 32.0),
+                    padding: EdgeInsets.symmetric(horizontal: 30.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                          padding: EdgeInsets.fromLTRB(0, 21, 0, 0),
                           child: Text(
                             "Hello",
                             style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
                           ),
                         ),
+                        SizedBox(height: 20,),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
@@ -362,11 +363,11 @@ class _JoinPageState extends State<JoinPage> with TickerProviderStateMixin {
                             ),
                           ],
                         ),
-                        SizedBox(height: 20),
+                        SizedBox(height: 26),
                         Text(
-                          "   저희 서비스는 효과적인 불법 사이트와 도박 관련 \n범죄 예방을 위해 "
-                              "부단히 노력하고 꾸준한 업데이트 중입니다.",
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                          "  저희 서비스는 효과적인 불법 사이트와 도박 범죄 예방을 위해 "
+                              "노력 중이며 지속적인 업데이트 중입니다.",
+                          style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.left,
                         ),
                       ],
@@ -374,6 +375,7 @@ class _JoinPageState extends State<JoinPage> with TickerProviderStateMixin {
                   ),
                   const SizedBox(height: 30),
                   const Divider(thickness: 3, color: Colors.white, indent: 170, endIndent: 33,),
+                  const SizedBox(height: 20),
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 32.0),
                     child: Align(
@@ -387,7 +389,7 @@ class _JoinPageState extends State<JoinPage> with TickerProviderStateMixin {
                   ),
                   const SizedBox(height: 10),//
                   Padding(
-                    padding: const EdgeInsets.only(left: 32, right: 32),
+                    padding: const EdgeInsets.only(left: 32, right: 40),
                     child: Text(
                       "   이메일 인증을 완료 후 가입하실 비밀번호를 입력해주세요. 보호자 연락처는 추후 차단 서비스에 이용됩니다.",
                       style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
@@ -405,7 +407,7 @@ class _JoinPageState extends State<JoinPage> with TickerProviderStateMixin {
                           Row(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(right: 192),
+                                padding: const EdgeInsets.only(right: 165),
                                 child: Text("E-mail",
                                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black87),
                                   textAlign: TextAlign.left,
@@ -427,10 +429,10 @@ class _JoinPageState extends State<JoinPage> with TickerProviderStateMixin {
                                     Text(_buttonText),
                                     if (_isButtonDisabled)
                                       Padding(
-                                        padding: const EdgeInsets.only(left: 8.0),
+                                        padding: const EdgeInsets.only(left: 8.0, right: 8.0),
                                         child: Text(
                                           '${(_countdownTime ~/ 60).toString().padLeft(2, '0')}:${(_countdownTime % 60).toString().padLeft(2, '0')}',
-                                          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                                          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.white),
                                         ),
                                       ),
                                   ],

@@ -233,7 +233,7 @@ class _DictionaryPageState extends StateMVC<DictionaryPage> with SingleTickerPro
             TextButton(
               onPressed: () {
                 _insertword(insertWCon.text, insertNCon.text);
-                Navigator.pop(context);
+                Navigator.of(context).pop();
                 insertWCon.text = '';
                 insertNCon.text = '';
                 setState(() {});

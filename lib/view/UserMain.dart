@@ -539,7 +539,7 @@ class _UserMainState extends State<UserMain> with TickerProviderStateMixin {
                         border: Border.all(color: Colors.black, width: 1),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(5.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -558,12 +558,12 @@ class _UserMainState extends State<UserMain> with TickerProviderStateMixin {
                             ),
                             const SizedBox(height: 23),
                             Padding(
-                              padding: const EdgeInsets.only(left: 8),
+                              padding: const EdgeInsets.only(left: 9),
                               child: buildInfoRow(
                                 context,
                                 imagePath:
                                 "images/icons/free-icon-one-5293828.png",
-                                text: ' 상단 차단 버튼을 누르고 활성화 하세요',
+                                text: ' 상단 차단 버튼을 누르고 활성화 하세요.',
                                 isSwitchOn: _isSwitchOn,
                               ),
                             ),
@@ -586,7 +586,7 @@ class _UserMainState extends State<UserMain> with TickerProviderStateMixin {
                                 imagePath:
                                 "images/icons/free-icon-three-5293883.png",
                                 text:
-                                ' 해당 어플의 기능을 끄거나 종료시 가입란에 \n기재된 보호자 연락처에게 실시간 알림이 전송\n됩니다.',
+                                ' 해당 앱의 기능을 끄거나 종료 시 기입란에 기재된 보호자 연락처에게 실시간 알림이 \n전송됩니다.',
                                 isSwitchOn: _isSwitchOn,
                               ),
                             ),
@@ -641,7 +641,7 @@ class _UserMainState extends State<UserMain> with TickerProviderStateMixin {
                         Padding(
                           padding: const EdgeInsets.only(top:26),
                           child: Text(
-                            " 도박, 예방합시다",
+                            "  도박, 예방합시다",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 28, // 글씨 크기 줄임
@@ -650,10 +650,10 @@ class _UserMainState extends State<UserMain> with TickerProviderStateMixin {
                             textAlign: TextAlign.start,
                           ),
                         ),
-                        SizedBox(width: 10),
+                        SizedBox(width: 3),
                         // Rive 애니메이션 추가
                         SizedBox(
-                          width: 124,
+                          width: 110,
                           height: 130,
                           child: rive.RiveAnimation.asset(
                             'assets/new_plant_test.riv', // Rive 애니메이션 파일 경로
@@ -675,7 +675,7 @@ class _UserMainState extends State<UserMain> with TickerProviderStateMixin {
                             color: _isSwitchOn ? Colors.black : Colors.white,
                           ),
                         ),
-                        SizedBox(height: 25),
+                        SizedBox(height: 34),
                         Text(
                           "도박은 다양한 이유로 위험 요소가 될 수 있습니다.",
                           style: TextStyle(
