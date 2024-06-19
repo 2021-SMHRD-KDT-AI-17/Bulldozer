@@ -84,7 +84,9 @@
             <img src="https://img.shields.io/badge/openai-412991?style=for-the-badge&logo=openai&logoColor=black">
             <img src="https://img.shields.io/badge/Naver Open API-03C75A?style=for-the-badge&logo=Naver Open API&logoColor=white">
             <img src="https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black"/>
-            <img src="https://img.shields.io/badge/Google Vision-4285F4?style=for-the-badge&logo=Google Vision&logoColor=white"/> 
+            <img src="https://img.shields.io/badge/Google Vision-4285F4?style=for-the-badge&logo=Google Vision&logoColor=white"/>
+            <img src="https://img.shields.io/badge/rive-1D1D1D?style=for-the-badge&logo=rive&logoColor=white"/>
+            <img src="https://img.shields.io/badge/lottie-66DEB1?style=for-the-badge&logo=lottie&logoColor=white"/>
         </td>
     </tr>
 </table>
@@ -120,8 +122,8 @@
 <br>
 
 * 이용자 메인화면(백그라운드 앱 실행 off/on)
-![이용자off](https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/fb249e0f-ba3e-45a2-8e75-e81f421ab98f)
-![이용자on](https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/9dbdec00-1882-4e54-a409-2b172dfdd4b8)
+<img src="https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/fb249e0f-ba3e-45a2-8e75-e81f421ab98f" height="640" width="360"/>
+<img src="https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/9dbdec00-1882-4e54-a409-2b172dfdd4b8" height="640" width="360"/>
 
 <br>
 
@@ -132,7 +134,7 @@
 <br>
 
 * 관리자 메인 화면
-  ![관리자 메인](https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/df5b5d75-a058-4df6-95f9-2f709e2d29ad)
+<img src="https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/df5b5d75-a058-4df6-95f9-2f709e2d29ad" height="640", width="360"/>
 
 <br>
 
