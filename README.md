@@ -95,7 +95,7 @@
 <br>
 
 ## ⚙ 시스템 아키텍처
-![시스템아키텍처](https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/634ba724-702f-42e2-bdc5-3c069e093ffe)
+![시스템아키텍처](https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/309d96f4-349c-4f92-ae6d-84f3948aef5d)
 
 
 
@@ -121,6 +121,24 @@
 
 
 <br>
+
+## 👾 모델 선택 및 유해사이트 판단 과정
+<br>
+
+### ✅모델 선택
+![실전프로젝트-발표-017](https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/7edf31e2-a02f-4cc2-b4c8-d4ee9532d6a8)
+
+<br>
+
+### 💬 유해사이트 판단 과정
+![차단과정](https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/ae82205e-f55f-4b33-99b0-ed0b293b4449)
+
+#### 불법 도박사이트 판단 예시
+![022](https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/22f73682-ed0a-483e-b478-490687e09c84)
+![025](https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/2d8de9ad-09a3-48b2-aadd-6edfdd078a47)
+
+
+
 
 ## 💻 화면구성
 <br>
