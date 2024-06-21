@@ -138,10 +138,10 @@
 
 
 
-
+<br>
 ## 💻 화면구성
 <br>
-<br>
+
 
 ### 📱 시작 화면
 <br>
@@ -150,12 +150,13 @@
 <img src="https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/6320963f-7e8a-454e-b482-dac9d35f4ae8" height="666" width="324"/>
 
 <br>
+<br>
 
 * 회원가입 화면
 <img src="https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/39045b15-ee2b-4df1-8112-47096371fbe7" height="666" width="324"/>
 
 <br>
-
+<br>
 
 ### 📱 이용자 화면
 <br>
@@ -164,6 +165,7 @@
 <img src="https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/fb249e0f-ba3e-45a2-8e75-e81f421ab98f" height="666" width="324"/>
 <img src="https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/9dbdec00-1882-4e54-a409-2b172dfdd4b8" height="666" width="324"/>
 
+<br>
 <br>
 
 * 불법 도박사이트 접근 시
@@ -191,15 +193,18 @@
 <img src="https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/65bb4cc4-dc32-4185-ac77-cbd063d97f1a" height="666" width="324"/>
 
 <br>
+<br>
 
 #### 회원 목록
 <img src="https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/844abbeb-bb01-4073-a7ff-5fe197c7320c" height="666" width="324"/>
 
 <br>
+<br>
 
 #### 유해사이트 목록
 <img src="https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/b919dc1c-7d66-4839-aba0-4c4383d4e96f" height="666" width="324"/>
 
+<br>
 <br>
 
 #### 단어사전
