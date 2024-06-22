@@ -153,8 +153,21 @@
 ### 💬 유해사이트 판단 과정
 ![차단과정](https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/ae82205e-f55f-4b33-99b0-ed0b293b4449)
 
+<br>
+
+* 유사도 판단으로 단어사전의 단어 일치 여부 및 단어 별 레벨링을 통한 판단
+<br>
+![023](https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/b969b770-4a35-4868-bf9f-3313d771104d)
+
+<br>
+
+* 랭체인에서 GoogleVision를 통한 도박사이트 판단 질문
+<br>
+![024](https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/c0906208-e50d-4c8c-a537-170a376d1107)
+
+
 #### 불법 도박사이트 판단 예시
-![022](https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/22f73682-ed0a-483e-b478-490687e09c84)
+![022](https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/01305de6-28f1-4971-856c-dee6b59d6c3f)
 ![025](https://github.com/2021-SMHRD-KDT-AI-17/Bulldozer/assets/157380359/2d8de9ad-09a3-48b2-aadd-6edfdd078a47)
 
 
